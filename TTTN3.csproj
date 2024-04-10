@@ -1,0 +1,598 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\LayoutAdmin\.gitignore" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\css\style.css.map" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\fonts\Ubuntu\Ubuntu-Bold.woff2" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\fonts\Ubuntu\Ubuntu-Light.woff2" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\fonts\Ubuntu\Ubuntu-Medium.woff2" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\fonts\Ubuntu\Ubuntu-Regular.woff2" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\images\dashboard\circle.svg" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\images\logo-mini.svg" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\images\logo.svg" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\js\chart.js" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\js\dashboard.js" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\js\file-upload.js" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\js\hoverable-collapse.js" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\js\jquery.cookie.js" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\js\misc.js" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\js\off-canvas.js" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\js\todo.js" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\js\todolist.js" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\scss\components\_badges.scss" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\scss\components\_bootstrap-progress.scss" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\scss\components\_breadcrumbs.scss" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\scss\components\_buttons.scss" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\scss\components\_cards.scss" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\scss\components\_checkbox-radio.scss" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\scss\components\_dropdown.scss" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\scss\components\_forms.scss" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\scss\components\_icons.scss" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\scss\components\_lists.scss" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\scss\components\_preview.scss" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\scss\components\_tables.scss" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\scss\components\_todo-list.scss" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\scss\landing-screens\_auth.scss" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\scss\mixins\_animation.scss" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\scss\mixins\_background.scss" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\scss\mixins\_badges.scss" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\scss\mixins\_blockqoute.scss" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\scss\mixins\_breadcrumbs.scss" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\scss\mixins\_buttons.scss" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\scss\mixins\_cards.scss" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\scss\mixins\_misc.scss" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\scss\mixins\_pagination.scss" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\scss\mixins\_popovers.scss" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\scss\mixins\_text.scss" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\scss\mixins\_tooltips.scss" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\scss\style.scss" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\scss\_dashboard.scss" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\scss\_demo.scss" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\scss\_fonts.scss" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\scss\_footer.scss" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\scss\_functions.scss" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\scss\_layouts.scss" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\scss\_misc.scss" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\scss\_navbar.scss" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\scss\_reset.scss" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\scss\_sidebar.scss" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\scss\_typography.scss" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\scss\_utilities.scss" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\scss\_variables.scss" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\scss\_vertical-wrapper.scss" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\scss\_widget-grid.scss" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\vendors\chart.js\Chart.min.js" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\vendors\js\bootstrap.min.js.map" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\vendors\js\vendor.bundle.base.js" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\vendors\mdi\css\materialdesignicons.min.css.map" />
+    <Content Remove="wwwroot\LayoutAdmin\assets\vendors\mdi\fonts\materialdesignicons-webfont.woff2" />
+    <Content Remove="wwwroot\LayoutAdmin\CHANGELOG.md" />
+    <Content Remove="wwwroot\LayoutAdmin\gulp-tasks\inject.js" />
+    <Content Remove="wwwroot\LayoutAdmin\gulp-tasks\serve.js" />
+    <Content Remove="wwwroot\LayoutAdmin\gulp-tasks\vendors.js" />
+    <Content Remove="wwwroot\LayoutAdmin\gulpfile.js" />
+    <Content Remove="wwwroot\LayoutAdmin\LICENSE" />
+    <Content Remove="wwwroot\LayoutAdmin\PSD\Purple_dashboard_free.psd" />
+    <Content Remove="wwwroot\LayoutAdmin\README.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Hangfire" Version="1.8.10" />
+    <PackageReference Include="Hangfire.AspNetCore" Version="1.8.10" />
+    <PackageReference Include="Hangfire.Core" Version="1.8.10" />
+    <PackageReference Include="Hangfire.SqlServer" Version="1.8.10" />
+    <PackageReference Include="MailKit" Version="4.3.0" />
+    <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="8.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.QuickGrid.EntityFrameworkAdapter" Version="8.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.1" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Quick.AspNetCore.Components.Web.Extensions" Version="6.0.2" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
+    <PackageReference Include="System.Net.Mail.Abstractions" Version="1.1.21" />
+    <PackageReference Include="X.PagedList" Version="8.4.7" />
+    <PackageReference Include="X.PagedList.Mvc.Core" Version="8.4.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Migrations\" />
+    <Folder Include="Views\Error\" />
+    <Folder Include="wwwroot\Images\Blog\" />
+    <Folder Include="wwwroot\Images\Product\" />
+    <Folder Include="wwwroot\LayoutAdmin\assets\chart.js\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\assets\LayoutAdmin\.DS_Store" />
+    <None Include="wwwroot\assets\LayoutAdmin\.gitignore" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\css\style.css.map" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\fonts\Ubuntu\Ubuntu-Bold.woff2" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\fonts\Ubuntu\Ubuntu-Light.woff2" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\fonts\Ubuntu\Ubuntu-Medium.woff2" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\fonts\Ubuntu\Ubuntu-Regular.woff2" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\images\dashboard\circle.svg" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\images\logo-mini.svg" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\images\logo.svg" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\js\chart.js" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\js\dashboard.js" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\js\file-upload.js" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\js\hoverable-collapse.js" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\js\jquery.cookie.js" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\js\misc.js" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\js\off-canvas.js" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\js\todo.js" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\js\todolist.js" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\scss\components\_badges.scss" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\scss\components\_bootstrap-progress.scss" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\scss\components\_breadcrumbs.scss" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\scss\components\_buttons.scss" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\scss\components\_cards.scss" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\scss\components\_checkbox-radio.scss" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\scss\components\_dropdown.scss" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\scss\components\_forms.scss" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\scss\components\_icons.scss" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\scss\components\_lists.scss" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\scss\components\_preview.scss" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\scss\components\_tables.scss" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\scss\components\_todo-list.scss" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\scss\landing-screens\_auth.scss" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\scss\mixins\_animation.scss" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\scss\mixins\_background.scss" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\scss\mixins\_badges.scss" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\scss\mixins\_blockqoute.scss" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\scss\mixins\_breadcrumbs.scss" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\scss\mixins\_buttons.scss" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\scss\mixins\_cards.scss" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\scss\mixins\_misc.scss" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\scss\mixins\_pagination.scss" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\scss\mixins\_popovers.scss" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\scss\mixins\_text.scss" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\scss\mixins\_tooltips.scss" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\scss\style.scss" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\scss\_dashboard.scss" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\scss\_demo.scss" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\scss\_fonts.scss" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\scss\_footer.scss" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\scss\_functions.scss" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\scss\_layouts.scss" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\scss\_misc.scss" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\scss\_navbar.scss" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\scss\_reset.scss" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\scss\_sidebar.scss" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\scss\_typography.scss" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\scss\_utilities.scss" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\scss\_variables.scss" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\scss\_vertical-wrapper.scss" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\scss\_widget-grid.scss" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\vendors\chart.js\Chart.min.js" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\vendors\js\bootstrap.min.js.map" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\vendors\js\vendor.bundle.base.js" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\vendors\mdi\css\materialdesignicons.min.css.map" />
+    <None Include="wwwroot\assets\LayoutAdmin\assets\vendors\mdi\fonts\materialdesignicons-webfont.woff2" />
+    <None Include="wwwroot\assets\LayoutAdmin\CHANGELOG.md" />
+    <None Include="wwwroot\assets\LayoutAdmin\gulp-tasks\inject.js" />
+    <None Include="wwwroot\assets\LayoutAdmin\gulp-tasks\serve.js" />
+    <None Include="wwwroot\assets\LayoutAdmin\gulp-tasks\vendors.js" />
+    <None Include="wwwroot\assets\LayoutAdmin\gulpfile.js" />
+    <None Include="wwwroot\assets\LayoutAdmin\LICENSE" />
+    <None Include="wwwroot\assets\LayoutAdmin\PSD\Purple_dashboard_free.psd" />
+    <None Include="wwwroot\assets\LayoutAdmin\README.md" />
+    <None Include="wwwroot\LayoutAdmin\.DS_Store" />
+    <None Include="wwwroot\LayoutAdmin\.gitignore" />
+    <None Include="wwwroot\LayoutAdmin\assets\css\style.css.map" />
+    <None Include="wwwroot\LayoutAdmin\assets\fonts\Ubuntu\Ubuntu-Bold.woff2" />
+    <None Include="wwwroot\LayoutAdmin\assets\fonts\Ubuntu\Ubuntu-Light.woff2" />
+    <None Include="wwwroot\LayoutAdmin\assets\fonts\Ubuntu\Ubuntu-Medium.woff2" />
+    <None Include="wwwroot\LayoutAdmin\assets\fonts\Ubuntu\Ubuntu-Regular.woff2" />
+    <None Include="wwwroot\LayoutAdmin\assets\images\dashboard\circle.svg" />
+    <None Include="wwwroot\LayoutAdmin\assets\images\logo-mini.svg" />
+    <None Include="wwwroot\LayoutAdmin\assets\images\logo.svg" />
+    <None Include="wwwroot\LayoutAdmin\assets\js\chart.js" />
+    <None Include="wwwroot\LayoutAdmin\assets\js\dashboard.js" />
+    <None Include="wwwroot\LayoutAdmin\assets\js\file-upload.js" />
+    <None Include="wwwroot\LayoutAdmin\assets\js\hoverable-collapse.js" />
+    <None Include="wwwroot\LayoutAdmin\assets\js\jquery.cookie.js" />
+    <None Include="wwwroot\LayoutAdmin\assets\js\misc.js" />
+    <None Include="wwwroot\LayoutAdmin\assets\js\off-canvas.js" />
+    <None Include="wwwroot\LayoutAdmin\assets\js\todo.js" />
+    <None Include="wwwroot\LayoutAdmin\assets\js\todolist.js" />
+    <None Include="wwwroot\LayoutAdmin\assets\scss\components\_badges.scss" />
+    <None Include="wwwroot\LayoutAdmin\assets\scss\components\_bootstrap-progress.scss" />
+    <None Include="wwwroot\LayoutAdmin\assets\scss\components\_breadcrumbs.scss" />
+    <None Include="wwwroot\LayoutAdmin\assets\scss\components\_buttons.scss" />
+    <None Include="wwwroot\LayoutAdmin\assets\scss\components\_cards.scss" />
+    <None Include="wwwroot\LayoutAdmin\assets\scss\components\_checkbox-radio.scss" />
+    <None Include="wwwroot\LayoutAdmin\assets\scss\components\_dropdown.scss" />
+    <None Include="wwwroot\LayoutAdmin\assets\scss\components\_forms.scss" />
+    <None Include="wwwroot\LayoutAdmin\assets\scss\components\_icons.scss" />
+    <None Include="wwwroot\LayoutAdmin\assets\scss\components\_lists.scss" />
+    <None Include="wwwroot\LayoutAdmin\assets\scss\components\_preview.scss" />
+    <None Include="wwwroot\LayoutAdmin\assets\scss\components\_tables.scss" />
+    <None Include="wwwroot\LayoutAdmin\assets\scss\components\_todo-list.scss" />
+    <None Include="wwwroot\LayoutAdmin\assets\scss\landing-screens\_auth.scss" />
+    <None Include="wwwroot\LayoutAdmin\assets\scss\mixins\_animation.scss" />
+    <None Include="wwwroot\LayoutAdmin\assets\scss\mixins\_background.scss" />
+    <None Include="wwwroot\LayoutAdmin\assets\scss\mixins\_badges.scss" />
+    <None Include="wwwroot\LayoutAdmin\assets\scss\mixins\_blockqoute.scss" />
+    <None Include="wwwroot\LayoutAdmin\assets\scss\mixins\_breadcrumbs.scss" />
+    <None Include="wwwroot\LayoutAdmin\assets\scss\mixins\_buttons.scss" />
+    <None Include="wwwroot\LayoutAdmin\assets\scss\mixins\_cards.scss" />
+    <None Include="wwwroot\LayoutAdmin\assets\scss\mixins\_misc.scss" />
+    <None Include="wwwroot\LayoutAdmin\assets\scss\mixins\_pagination.scss" />
+    <None Include="wwwroot\LayoutAdmin\assets\scss\mixins\_popovers.scss" />
+    <None Include="wwwroot\LayoutAdmin\assets\scss\mixins\_text.scss" />
+    <None Include="wwwroot\LayoutAdmin\assets\scss\mixins\_tooltips.scss" />
+    <None Include="wwwroot\LayoutAdmin\assets\scss\style.scss" />
+    <None Include="wwwroot\LayoutAdmin\assets\scss\_dashboard.scss" />
+    <None Include="wwwroot\LayoutAdmin\assets\scss\_demo.scss" />
+    <None Include="wwwroot\LayoutAdmin\assets\scss\_fonts.scss" />
+    <None Include="wwwroot\LayoutAdmin\assets\scss\_footer.scss" />
+    <None Include="wwwroot\LayoutAdmin\assets\scss\_functions.scss" />
+    <None Include="wwwroot\LayoutAdmin\assets\scss\_layouts.scss" />
+    <None Include="wwwroot\LayoutAdmin\assets\scss\_misc.scss" />
+    <None Include="wwwroot\LayoutAdmin\assets\scss\_navbar.scss" />
+    <None Include="wwwroot\LayoutAdmin\assets\scss\_reset.scss" />
+    <None Include="wwwroot\LayoutAdmin\assets\scss\_sidebar.scss" />
+    <None Include="wwwroot\LayoutAdmin\assets\scss\_typography.scss" />
+    <None Include="wwwroot\LayoutAdmin\assets\scss\_utilities.scss" />
+    <None Include="wwwroot\LayoutAdmin\assets\scss\_variables.scss" />
+    <None Include="wwwroot\LayoutAdmin\assets\scss\_vertical-wrapper.scss" />
+    <None Include="wwwroot\LayoutAdmin\assets\scss\_widget-grid.scss" />
+    <None Include="wwwroot\LayoutAdmin\assets\vendors\chart.js\Chart.min.js" />
+    <None Include="wwwroot\LayoutAdmin\assets\vendors\js\bootstrap.min.js.map" />
+    <None Include="wwwroot\LayoutAdmin\assets\vendors\js\vendor.bundle.base.js" />
+    <None Include="wwwroot\LayoutAdmin\assets\vendors\mdi\css\materialdesignicons.min.css.map" />
+    <None Include="wwwroot\LayoutAdmin\assets\vendors\mdi\fonts\materialdesignicons-webfont.woff2" />
+    <None Include="wwwroot\LayoutAdmin\CHANGELOG.md" />
+    <None Include="wwwroot\LayoutAdmin\gulp-tasks\inject.js" />
+    <None Include="wwwroot\LayoutAdmin\gulp-tasks\serve.js" />
+    <None Include="wwwroot\LayoutAdmin\gulp-tasks\vendors.js" />
+    <None Include="wwwroot\LayoutAdmin\gulpfile.js" />
+    <None Include="wwwroot\LayoutAdmin\LICENSE" />
+    <None Include="wwwroot\LayoutAdmin\PSD\Purple_dashboard_free.psd" />
+    <None Include="wwwroot\LayoutAdmin\README.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\LayoutAdmin\assets\css\style.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\fonts\Ubuntu\Ubuntu-Bold.eot">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\fonts\Ubuntu\Ubuntu-Bold.ttf">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\fonts\Ubuntu\Ubuntu-Bold.woff">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\fonts\Ubuntu\Ubuntu-Light.eot">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\fonts\Ubuntu\Ubuntu-Light.ttf">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\fonts\Ubuntu\Ubuntu-Light.woff">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\fonts\Ubuntu\Ubuntu-Medium.eot">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\fonts\Ubuntu\Ubuntu-Medium.ttf">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\fonts\Ubuntu\Ubuntu-Medium.woff">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\fonts\Ubuntu\Ubuntu-Regular.eot">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\fonts\Ubuntu\Ubuntu-Regular.ttf">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\fonts\Ubuntu\Ubuntu-Regular.woff">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\images\dashboard\circle.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\images\dashboard\img_1.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\images\dashboard\img_2.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\images\dashboard\img_3.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\images\dashboard\img_4.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\images\faces-clipart\pic-1.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\images\faces-clipart\pic-2.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\images\faces-clipart\pic-3.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\images\faces-clipart\pic-4.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\images\faces\face1.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\images\faces\face10.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\images\faces\face11.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\images\faces\face12.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\images\faces\face13.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\images\faces\face14.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\images\faces\face15.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\images\faces\face16.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\images\faces\face17.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\images\faces\face18.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\images\faces\face19.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\images\faces\face2.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\images\faces\face20.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\images\faces\face21.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\images\faces\face22.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\images\faces\face23.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\images\faces\face24.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\images\faces\face25.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\images\faces\face26.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\images\faces\face27.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\images\faces\face3.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\images\faces\face4.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\images\faces\face5.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\images\faces\face6.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\images\faces\face7.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\images\faces\face8.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\images\faces\face9.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\images\favicon.ico">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\images\favicon.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\images\sprites\blue.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\images\sprites\dark.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\images\sprites\flag.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\images\sprites\green.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\images\sprites\jsgrid-icons.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\images\sprites\red.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\images\sprites\yellow.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\vendors\css\vendor.bundle.base.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\vendors\mdi\css\materialdesignicons.min.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\vendors\mdi\fonts\materialdesignicons-webfont.eot">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\vendors\mdi\fonts\materialdesignicons-webfont.ttf">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\assets\vendors\mdi\fonts\materialdesignicons-webfont.woff">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\index.html">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\package.json">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\pages\charts\chartjs.html">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\pages\forms\basic_elements.html">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\pages\icons\mdi.html">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\pages\samples\blank-page.html">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\pages\samples\error-404.html">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\pages\samples\error-500.html">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\pages\samples\login.html">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\pages\samples\register.html">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\pages\tables\basic-table.html">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\pages\ui-features\buttons.html">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\pages\ui-features\typography.html">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\partials\_footer.html">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\partials\_navbar.html">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\partials\_sidebar.html">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\LayoutAdmin\screenshot.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>
