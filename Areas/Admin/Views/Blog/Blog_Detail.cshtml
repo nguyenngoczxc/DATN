@@ -1,0 +1,67 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model TTTN3.Models.blog
+
+@{
+    ViewData["Title"] = "Blog detail";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Blog detail</h1>
+
+<div>
+    <h4>Blog</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            Title
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.blog_Title)
+        </dd>
+       @*  <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.alias)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.alias)
+        </dd> *@
+        
+        <dt class = "col-sm-2">
+            Image
+        </dt>
+        <dd class="col-sm-10">
+            <img src="@Url.Content("~/Images/Blog/" + Model.blog_Image)" alt="@Model.blog_Title" style="max-width: 100px; max-height: 100px;" />
+
+        </dd>
+        <dt class = "col-sm-2">
+            Date create
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.blog_Date)
+        </dd>
+        <dt class="col-sm-2">
+            Detail
+        </dt>
+        <dd class="col-sm-10">
+            @Html.Raw(Model.blog_Detail)
+        </dd>
+    </dl>
+<div>
+    <a asp-action="Edit_Blog" asp-route-blog_Code="@Model?.blog_Code" asp-controller="Blog" asp-area="Admin">Edit</a> |
+    <a asp-action="List_Blog" asp-area="Admin" asp-controller="Blog">Blog list</a>
+</div>
+</div>
+    @* <form method="post" asp-action="Delete_BlogConfirmed" asp-route-brand_Code="@ViewBag.BlogCode" id="deleteForm">
+        @Html.AntiForgeryToken()
+        <button id="deleteButton" type="button" class="btn btn-danger">Delete</button>
+        <a asp-action="List_Blog" class="btn btn-secondary">Cancel</a>
+    </form>
+
+<script>
+    // JavaScript to handle the confirmation
+    document.getElementById("deleteButton").addEventListener("click", function () {
+        var confirmed = confirm("Are you sure you want to delete this brand?");
+        if (confirmed) {
+            document.getElementById("deleteForm").submit();
+        }
+    });
+</script> *@

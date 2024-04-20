@@ -1,0 +1,116 @@
+﻿@using X.PagedList.Mvc.Core
+@using TTTN3.Models
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model X.PagedList.IPagedList<blog>
+
+@{
+    ViewData["Title"] = "List blog";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>List blog</h1>
+
+<p>
+    <a asp-action="Create_Blog">Create New</a>
+</p>
+<p>
+    @TempData["Message"]
+</p>
+<style>
+    .table th, .table td {
+        width:10%;
+    }
+</style>
+<div class="row">
+    <div class="col-6">
+        @using (Html.BeginForm("List_Blog", "Blog", FormMethod.Get, new { }))
+        {
+            <div class="input-group input-group-sm">
+                @Html.TextBox("SearchText", null, new { @class = "form-control" })
+                @*<input type="text" name="searchtext" class="form-control" />*@
+                <span class="input-group-append">
+                    <button type="submit" class="btn btn-info btn-flat">Search</button>
+                </span>
+            </div>
+        }
+    </div>
+</div>
+<br />
+<table class="table" width="100%">
+    <thead >
+        <tr>
+            <th>
+                #
+            </th>
+            <th>
+                Blog code
+            </th>
+            <th>
+                Title
+            </th>
+            @*  <th>
+            Alias
+            </th> *@
+            <th>
+                Blog image
+            </th>
+            <th>
+                Create date
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            var i = 0;
+        }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @((Model.PageNumber - 1) * Model.PageSize + i + 1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.blog_Code)
+                </td>
+                <td>
+                    <div class="blog-title" data-original-title="@item.blog_Title">@Html.DisplayFor(modelItem => item.blog_Title)</div>
+                </td>
+                @* <td>
+            @Html.DisplayFor(modelItem => item.alias)
+            </td> *@
+                <td>
+                    @* @Html.DisplayFor(modelItem => item.blog_Image) *@
+
+                    <img src="@Url.Content("~/Images/Blog/" + item.blog_Image)" alt="@item.blog_Title" style="max-width: 100px; max-height: 100px;" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.blog_Date)
+                </td>
+                <td>
+                    <a asp-action="Edit_Blog" asp-route-blog_Code="@item.blog_Code">Edit</a> |
+                    <a asp-action="Blog_Detail" asp-route-blog_Code="@item.blog_Code">Details</a> |
+                    <a asp-action="Delete_Blog" asp-route-blog_Code="@item.blog_Code">Delete</a>
+                </td>
+            </tr>
+            i++;
+        }
+    </tbody>
+</table>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var blogTitleElements = document.querySelectorAll('.blog-title');
+
+        blogTitleElements.forEach(function (element) {
+            var originalTitle = element.getAttribute('data-original-title');
+            var truncatedTitle = originalTitle.length > 20 ? originalTitle.substring(0, 20) + '...' : originalTitle;
+            element.textContent = truncatedTitle;
+        });
+    });
+</script>
+@Html.PagedListPager(Model, page => Url.Action("List_Blog", new { page = page, SearchText = Context.Request.Query["SearchText"] }),
+                        new X.PagedList.Web.Common.PagedListRenderOptions()
+                    {
+                        LiElementClasses = new List<String> { "page-item" },
+                        PageClasses = new List<String> { "page-link" }
+                    })
