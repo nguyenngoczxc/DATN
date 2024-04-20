@@ -1,0 +1,43 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model TTTN3.Models.color
+
+@{
+    ViewData["Title"] = "Create color";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Create color</h1>
+
+<h4>color</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create_Color" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @* <div class="form-group">
+            <label asp-for="color_Code" class="control-label">color code</label>
+            <input asp-for="color_Code" class="form-control" />
+            <span asp-validation-for="color_Code" class="text-danger"></span>
+            </div> *@
+            <div class="form-group">
+                <label asp-for="color_Name" class="control-label">Color name</label>
+                <input asp-for="color_Name" class="form-control" />
+                <span asp-validation-for="color_Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="List_Color" asp-controller="Color" asp-area="Admin"> Color list</a>
+
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
