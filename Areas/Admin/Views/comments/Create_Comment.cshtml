@@ -1,0 +1,51 @@
+﻿@model TTTN3.Models.comment
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Create comment";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Create comment</h1>
+
+<h4>Comment</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create_Comment" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @* <div class="form-group">
+                <label asp-for="comment_Code" class="control-label">Comment code</label>
+                <input asp-for="comment_Code" class="form-control" readonly/>
+                <span asp-validation-for="comment_Code" class="text-danger"></span>
+            </div> *@
+            <div class="form-group">
+                <label asp-for="product_Code" class="control-label">Product </label>
+                <select asp-for="product_Code" class ="form-control" asp-items="ViewBag.product_Code"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="AspNetUserId" class="control-label">Customer</label>
+                <select asp-for="AspNetUserId" class ="form-control" asp-items="ViewBag.customer_Code"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="content" class="control-label">Content</label>
+                <input asp-for="content" class="form-control" />
+                <span asp-validation-for="content" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="parentComment_Id" class="control-label">Reply to Comment</label>
+                <select asp-for="parentComment_Id" class="form-control" asp-items="ViewBag.parentComment_Id">
+                    <option value="">Select a comment to reply to</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="List_Comment" asp-area="Admin" asp-controller="comments">List comment</a>
+</div>
+
