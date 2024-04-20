@@ -1,0 +1,97 @@
+﻿@using X.PagedList.Mvc.Core
+@using TTTN3.Models
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model X.PagedList.IPagedList<comment>
+@{
+    ViewData["Title"] = "List comment";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>List comment</h1>
+
+<p>
+    <a asp-action="Create_Comment">Create New</a>
+</p>
+<div class="row">
+    <div class="col-6">
+        @using (Html.BeginForm("List_Comment", "comments", FormMethod.Get, new { }))
+        {
+            <div class="input-group input-group-sm">
+                @Html.TextBox("SearchText", null, new { @class = "form-control" })
+                @*<input type="text" name="searchtext" class="form-control" />*@
+                <span class="input-group-append">
+                    <button type="submit" class="btn btn-info btn-flat">Search</button>
+                </span>
+            </div>
+        }
+    </div>
+</div>
+<br />
+<table class="table">
+    <thead>
+        <tr>
+            <th>STT</th>
+            <th>
+                Comment code
+            </th>
+            <th>
+                Content
+            </th>
+            <th>
+                Product name
+            </th>
+            <th>
+                Customer name
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            var i = 0;
+        }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @((Model.PageNumber - 1) * Model.PageSize + i + 1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.comment_Code)
+                </td>
+            <td>
+                    <div class="comment-title" data-original-title="@item.content">@Html.DisplayFor(modelItem => item.content)</div>
+            </td>
+            <td>
+                    <div class="comment-title" data-original-title="@item.product.product_Name"> @Html.DisplayFor(modelItem => item.product.product_Name)</div>
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.AspNetUser.UserName)
+            </td>
+            <td>
+                    <a asp-action="Edit_Comment" asp-route-comment_Code="@item.comment_Code">Edit</a> |
+                    <a asp-action="Details_Comment" asp-route-comment_Code="@item.comment_Code">Details</a> |
+                    <a asp-action="Delete_Comment" asp-route-comment_Code="@item.comment_Code">Delete</a>
+            </td>
+        </tr>
+        i++;
+}
+    </tbody>
+</table>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var blogTitleElements = document.querySelectorAll('.comment-title');
+
+        blogTitleElements.forEach(function (element) {
+            var originalTitle = element.getAttribute('data-original-title');
+            var truncatedTitle = originalTitle.length > 20 ? originalTitle.substring(0, 20) + '...' : originalTitle;
+            element.textContent = truncatedTitle;
+        });
+    });
+</script>
+@Html.PagedListPager(Model, page => Url.Action("List_Comment", new { page = page, SearchText = ViewData["SearchText"] }),
+                        new X.PagedList.Web.Common.PagedListRenderOptions()
+                    {
+                        LiElementClasses = new List<String> { "page-item" },
+                        PageClasses = new List<String> { "page-link" }
+                    })
