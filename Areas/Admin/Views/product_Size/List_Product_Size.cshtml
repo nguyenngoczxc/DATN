@@ -1,0 +1,81 @@
+﻿@model X.PagedList.IPagedList<product_Size>
+@using X.PagedList.Mvc.Core
+@using TTTN3.Models
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "List_Product_Size";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Danh sách kích thước của sản phẩm/h1>
+
+<p>
+    <a asp-action="Create_Product_Size">Thêm kích thước</a>
+</p>
+<div class="row">
+    <div class="col-6">
+        @using (Html.BeginForm("List_Product_Size", "product_Size", FormMethod.Get, new { }))
+        {
+            <div class="input-group input-group-sm">
+                @Html.TextBox("SearchText", null, new { @class = "form-control" })
+                @*<input type="text" name="searchtext" class="form-control" />*@
+                <span class="input-group-append">
+                    <button type="submit" class="btn btn-info btn-flat">Tìm</button>
+                </span>
+            </div>
+        }
+    </div>
+</div>
+<br />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                STT
+            </th>
+            <th>
+                Sản phẩm
+            </th>
+            <th>
+                Kích thước
+            </th>
+            <th>
+                Giá
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            var i = 0;
+        }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @((Model.PageNumber - 1) * Model.PageSize + i + 1)
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.product.product_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.size.size_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                    <a asp-action="Edit_Product_Size" asp-route-product_Size_Code="@item.product_Size_Code">Sửa</a> |
+                    <a asp-action="Delete_Product_Size" asp-route-product_Size_Code="@item.product_Size_Code">Xóa</a>
+            </td>
+        </tr>
+        i++;
+}
+    </tbody>
+</table>
+@Html.PagedListPager(Model, page => Url.Action("List_Product_Size", new { page = page, SearchText = ViewData["SearchText"] }),
+                                new X.PagedList.Web.Common.PagedListRenderOptions()
+                            {
+                                LiElementClasses = new List<String> { "page-item" },
+                                PageClasses = new List<String> { "page-link" }
+                            })

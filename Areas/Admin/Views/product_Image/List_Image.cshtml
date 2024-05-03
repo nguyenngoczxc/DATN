@@ -1,0 +1,74 @@
+﻿@using X.PagedList.Mvc.Core
+@model X.PagedList.IPagedList<TTTN3.Models.product_Image>;
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "List_Image";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Danh sách ảnh của sản phẩm</h1>
+
+<p>
+    <a asp-action="Create_Image">Thêm ảnh</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                STT
+            </th>
+            <th>
+                Sản phẩm
+            </th>
+            <th>
+                Ảnh
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <!-- ... (previous code) ... -->
+
+    <tbody>
+        @{
+            var i = 0;
+        }
+        @foreach (var item in Model )
+        {
+            <tr>
+                <td>
+                    @((Model.PageNumber - 1) * Model.PageSize + i + 1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.product.product_Name)
+                </td>
+                <td>
+                    @if (item.product.product_Images.Any())
+                    {
+                        var firstImage = item.product.product_Images.First();
+                        <img src="@Url.Content("~/Images/Product/" + @firstImage.image_Filename)" alt="@item.product.product_Name" style="max-width: 100px; max-height: 100px;" />
+                    }
+                    else
+                    {
+                        <span>No Image</span>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit_Image" asp-route-product_Code="@item.product_Code">Sửa</a> |
+                    <a asp-action="Detail_Image" asp-route-product_Code="@item.product_Code">Chi tiết</a> |
+                    <a asp-action="Delete_Image" asp-route-product_Code="@item.product_Code">Xóa</a>
+                </td>
+            </tr>
+            i++;
+        }
+    </tbody>
+
+    <!-- ... (remaining code) ... -->
+
+</table>
+@Html.PagedListPager(Model, page => Url.Action("List_Image", new { page = page, SearchText = ViewData["SearchText"] }),
+                        new X.PagedList.Web.Common.PagedListRenderOptions()
+                    {
+                        LiElementClasses = new List<String> { "page-item" },
+                        PageClasses = new List<String> { "page-link" }
+                    })

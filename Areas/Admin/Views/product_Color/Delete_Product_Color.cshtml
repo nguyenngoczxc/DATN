@@ -1,0 +1,48 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model TTTN3.Models.product_Color
+
+@{
+    ViewData["Title"] = "Delete_Product_Color";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Xóa màu của sản phẩm</h1>
+
+<h3>Bạn chắc chắn muốn xóa?</h3>
+<div>
+    <h4>product_Color</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.product)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.product.product_Code)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.color)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.color.color_Code)
+        </dd>
+    </dl>
+
+    <div>
+        <form method="post" asp-action="Delete_Product_ColorConfirmed" asp-route-product_Color_Code="@ViewBag.ProductColorCode" id="deleteForm">
+            @Html.AntiForgeryToken()
+            <button id="deleteButton" type="button" class="btn btn-danger">Xóa</button>
+            <a asp-action="List_Product_Color" class="btn btn-secondary">Hủy</a>
+        </form>
+    </div>
+</div>
+
+
+<script>
+    // JavaScript to handle the confirmation
+    document.getElementById("deleteButton").addEventListener("click", function () {
+        var confirmed = confirm("Bạn chắc chắn muốn xóa?");
+        if (confirmed) {
+            document.getElementById("deleteForm").submit();
+        }
+    });
+</script>

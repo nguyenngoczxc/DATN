@@ -1,0 +1,39 @@
+﻿@model TTTN3.Models.product_Image
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Thêm ảnh</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create_Image" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="product_Code" class="control-label">Sản phẩm</label>
+                <select asp-for="product_Code" class="form-control" asp-items="ViewBag.product_Code"></select>
+            </div>
+            <div class="form-group">
+                <label for="images">Tải ảnh</label>
+                <input type="file" name="images" multiple class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Thêm" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="List_Image" asp-area="Admin" asp-controller="product_Image">Danh sách</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

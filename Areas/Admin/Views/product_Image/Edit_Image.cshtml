@@ -1,0 +1,62 @@
+﻿@model List<TTTN3.Models.product_Image>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Edit Product Images";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Sửa ảnh của sản phẩm</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Edit_Image" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <!-- Display product name -->
+            <div class="form-group">
+                <label class="control-label">Sản phẩm</label>
+                <input type="text" value="@ViewData["ProductName"]" class="form-control" readonly />
+            </div>
+
+            <!-- Display existing product images -->
+            @foreach (var productImage in Model)
+            {
+                <div class="form-group">
+                    <label class="control-label">Ảnh cũ</label>
+                    <img src="@Url.Content($"~/Images/Product/{productImage.image_Filename}")" alt="Ảnh sản phẩm" class="img-thumbnail" style="max-width: 100px; max-height: 100px;" />
+                </div>
+            }
+
+            <!-- Input for newImages -->
+            <div class="form-group">
+                <label class="control-label">Ảnh mới</label>
+                <input type="file" name="newImages" multiple />
+                <span class="text-danger">@Html.Raw(ViewData["ErrorMessage"])</span>
+            </div>
+
+            <!-- Hidden field for existingImageFilenames -->
+            @foreach (var existingImageFilename in Model)
+            {
+                <input type="hidden" name="existingImageFilenames[]" value="@existingImageFilename.image_Filename" />
+            }
+
+            <!-- Hidden field for product_Code -->
+            <input type="hidden" name="product_Code" value="@ViewData["ProductCode"]" />
+
+            <div class="form-group">
+                <input type="submit" value="Sửa" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="List_Image" asp-area="Admin" asp-controller="product_Image">Danh sách</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
