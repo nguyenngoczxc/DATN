@@ -1,0 +1,98 @@
+﻿@using X.PagedList.Mvc.Core
+@model X.PagedList.IPagedList<TTTN3.Models.product_Color>;
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "List product color";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Danh sách màu của sản phẩm</h1>
+
+<p>
+    <a asp-action="Create_Product_Color">Thêm màu</a>
+</p>
+<div class="row">
+    <div class="col-6">
+        @using (Html.BeginForm("List_Product_Color", "product_Color", FormMethod.Get, new { }))
+        {
+            <div class="input-group input-group-sm">
+                @Html.TextBox("SearchText", null, new { @class = "form-control" })
+                @*<input type="text" name="searchtext" class="form-control" />*@
+                <span class="input-group-append">
+                    <button type="submit" class="btn btn-info btn-flat">Tìm</button>
+                </span>
+            </div>
+        }
+    </div>
+</div>
+<br />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                STT
+            </th>
+            <th>
+                Mã
+            </th>
+            <th>
+                Sản phẩm 
+            </th>
+            <th>
+                Màu
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <!-- ... (previous code) ... -->
+
+    <tbody>
+        @{
+            var i = 0;
+        }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @((Model.PageNumber - 1) * Model.PageSize + i + 1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.product_Color_Code)
+                </td>
+                <td>
+                <div class="product-Name" data-original-title="@item.product.product_Name">@Html.DisplayFor(modelItem => item.product.product_Name)</div>
+                    @* @Html.DisplayFor(modelItem => item.product.product_Name) *@
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.color.color_Name)
+                </td>
+                <td>
+                    <a asp-action="Edit_Product_Color" asp-route-product_Color_Code="@item.product_Color_Code">Sửa</a> |
+                    <a asp-action="Delete_Product_Color" asp-route-product_Color_Code="@item.product_Color_Code">Xóa</a>
+                </td>
+            </tr>
+            i++;
+        }
+    </tbody>
+
+    <!-- ... (remaining code) ... -->
+
+</table>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var blogTitleElements = document.querySelectorAll('.product-Name');
+
+        blogTitleElements.forEach(function (element) {
+            var originalTitle = element.getAttribute('data-original-title');
+            var truncatedTitle = originalTitle.length > 20 ? originalTitle.substring(0, 20) + '...' : originalTitle;
+            element.textContent = truncatedTitle;
+        });
+    });
+</script>
+@Html.PagedListPager(Model, page => Url.Action("List_Product_Color", new { page = page, SearchText = ViewData["SearchText"] }),
+                            new X.PagedList.Web.Common.PagedListRenderOptions()
+                        {
+                            LiElementClasses = new List<String> { "page-item" },
+                            PageClasses = new List<String> { "page-link" }
+                        })

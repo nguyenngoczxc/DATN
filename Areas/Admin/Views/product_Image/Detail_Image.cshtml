@@ -1,0 +1,37 @@
+﻿@model List<TTTN3.Models.product_Image>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Delete Product Images";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Ảnh sản phẩm</h1>
+
+<div class="row">
+    <div class="col-md-6">
+
+            <!-- Display product name and images -->
+            <div class="form-group">
+                <label class="control-label">Sản phẩm</label>
+                <input type="text" value="@ViewData["ProductName"]" class="form-control" readonly />
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Ảnh</label>
+                @foreach (var productImage in Model)
+                {
+                    <div>
+                        <img src="@Url.Content($"~/Images/Product/{productImage.image_Filename}")" alt="Ảnh sản phẩm" class="img-thumbnail" style="max-width: 100px; max-height: 100px;" />
+                    </div>
+                }
+            </div>
+
+    </div>
+</div>
+
+
+<div>
+    <a asp-action="Edit_Image" asp-route-product_Code="@ViewData["ProductCode"]">Sửa</a> |
+    <a asp-action="List_Image" asp-area="Admin" asp-controller="product_Image">Danh sách</a>
+</div>

@@ -1,0 +1,162 @@
+﻿@using X.PagedList.Mvc.Core
+@model X.PagedList.IPagedList<TTTN3.Models.product>;
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "List_Product";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Danh sách sản phẩm</h1>
+
+<p>
+    <a asp-action="Create_Product">Thêm mới</a>
+</p>
+<div class="row">
+    <div class="col-6">
+        @using (Html.BeginForm("List_Product", "Product", FormMethod.Get, new { }))
+        {
+            <div class="input-group input-group-sm">
+                @Html.TextBox("SearchText", null, new { @class = "form-control" })
+                @*<input type="text" name="searchtext" class="form-control" />*@
+                <span class="input-group-append">
+                    <button type="submit" class="btn btn-info btn-flat">Tìm</button>
+                </span>
+            </div>
+        }
+    </div>
+</div>
+<br />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                STT
+            </th>
+            <th>
+                Sản phẩm
+            </th>
+            <th>
+                Ảnh đại diện
+            </th>
+            <th>
+                Số lượng
+            </th>
+            <th>
+                Nhà sản xuất
+            </th>
+            <th>
+                Kiểu khóa
+            </th>
+            <th>
+                Kiểu bánh xe
+            </th>
+            <th>
+                Chất liệu
+            </th>
+            <th>
+                <input type="checkbox" id="khuyenMaiCheckbox" />
+                <label for="khuyenMaiCheckbox">Khuyến mãi</label>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            var i = 0;
+        }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @((Model.PageNumber - 1) * Model.PageSize + i + 1)
+                </td>
+                <td>
+                    <div class="product-Name" data-original-title="@item.product_Name">@Html.DisplayFor(modelItem => item.product_Name)</div>
+                </td>
+                <td>
+                    <img src="@Url.Content("~/Images/Product/" + item.product_Avatar)" alt="@item.product_Name" style="max-width: 100px; max-height: 100px;" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.brand.brand_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.zipper.zipper_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.wheel.wheel_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.material.material_Name)
+                </td>
+                <td>
+                    @if (item.sale == true)
+                    {
+                        <input type="checkbox" id="sale" checked />
+                    }
+                    else
+                    {
+                        <input type="checkbox" id="sale" />
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit_Product" asp-route-product_Code="@item.product_Code">Sửa</a> |
+                    <a asp-action="Product_Detail" asp-route-product_Code="@item.product_Code">Chi tiết</a> |
+                    <a asp-action="Delete_Product" asp-route-product_Code="@item.product_Code">Xóa</a>
+                </td>
+            </tr>
+            i++;
+        }
+    </tbody>
+</table>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Xử lý phần cắt ngắn tên sản phẩm
+        var blogTitleElements = document.querySelectorAll('.product-Name');
+        blogTitleElements.forEach(function (element) {
+            var originalTitle = element.getAttribute('data-original-title');
+            var truncatedTitle = originalTitle.length > 20 ? originalTitle.substring(0, 20) + '...' : originalTitle;
+            element.textContent = truncatedTitle;
+        });
+        // Lắng nghe sự kiện 'change' của checkbox với ID '#khuyenMaiCheckbox'
+        $('body').on('change', '#khuyenMaiCheckbox', function () {
+            // Lấy trạng thái của checkbox (true nếu được kiểm tra)
+            var applyKhuyenMai = this.checked;
+
+            // Gửi yêu cầu AJAX để cập nhật trạng thái 'sale' và giảm giá sản phẩm
+            $.ajax({
+                url: '/Admin/Product/ApplyKhuyenMai', // URL endpoint để xử lý yêu cầu
+                type: 'POST', // Sử dụng phương thức POST
+                data: {
+                    applyKhuyenMai: applyKhuyenMai // Gửi trạng thái của checkbox (true hoặc false)
+                },
+                success: function (response) {
+                    // Kiểm tra phản hồi từ server
+                    if (response.success) {
+                        // Nếu thành công, tải lại trang để cập nhật giao diện
+                        alert('Đã cập nhật thành công!');
+                        location.reload();
+                    } else {
+                        // Nếu thất bại, thông báo lỗi
+                        alert('Có lỗi xảy ra khi cập nhật.');
+                    }
+                },
+                error: function (err) {
+                    // Xử lý lỗi trong quá trình AJAX
+                    console.error('Lỗi trong quá trình AJAX:', err);
+                    alert('Có lỗi xảy ra trong quá trình AJAX.');
+                }
+            });
+        });
+
+    });
+
+</script>
+@Html.PagedListPager(Model, page => Url.Action("List_Product", new { page = page, SearchText = ViewData["SearchText"] }),
+                                            new X.PagedList.Web.Common.PagedListRenderOptions()
+                                        {
+                                            LiElementClasses = new List<String> { "page-item" },
+                                            PageClasses = new List<String> { "page-link" }
+                                        })

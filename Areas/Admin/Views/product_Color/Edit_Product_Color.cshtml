@@ -1,0 +1,46 @@
+﻿@model TTTN3.Models.product_Color
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Edit_Product_Color";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Sửa màu của sản phẩm</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit_Product_Color" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="product_Color_Code" class="control-label">Mã</label>
+                <input asp-for="product_Color_Code" class="form-control" readonly/>
+                <span asp-validation-for="product_Color_Code" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="product_Code" class="control-label">Sản phẩm</label>
+                <select asp-for="product_Code" class="form-control" asp-items="ViewBag.product_Code"></select>
+                <span asp-validation-for="product_Code" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="color_Code" class="control-label">Màu</label>
+                <select asp-for="color_Code" class="form-control" asp-items="ViewBag.color_Code" multiple></select>
+                <span asp-validation-for="color_Code" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Sửa" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="List_Product_Color" asp-area="Admin" asp-controller="product_Color">Danh sách</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

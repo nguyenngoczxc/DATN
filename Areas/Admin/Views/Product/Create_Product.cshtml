@@ -1,0 +1,75 @@
+﻿@model TTTN3.Models.product
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Create_Product";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Thêm sản phẩm</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create_Product" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="product_Name" class="control-label">Tên</label>
+                <input asp-for="product_Name" class="form-control" />
+                <span asp-validation-for="product_Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="brand_Code" class="control-label">Nhà sản xuất</label>
+                <select asp-for="brand_Code" class ="form-control" asp-items="ViewBag.brand_Code"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="product_Avatar" class="control-label">Ảnh đại diện</label>
+                @* <input asp-for="product_Avatar" class="form-control" /> *@
+                <input type="file" asp-for="product_Avatar" name="anhDaiDienFile" class="form-control" />
+                <span asp-validation-for="product_Avatar" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="material_Code" class="control-label">Chất liệu</label>
+                <select asp-for="material_Code" class ="form-control" asp-items="ViewBag.material_Code"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="zipper_Code" class="control-label">Kiểu khóa</label>
+                <select asp-for="zipper_Code" class ="form-control" asp-items="ViewBag.zipper_Code"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="wheel_Code" class="control-label">Kiểu bánh xe</label>
+                <select asp-for="wheel_Code" class ="form-control" asp-items="ViewBag.wheel_Code"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="quantity" class="control-label">Số lượng</label>
+                <input asp-for="quantity" class="form-control" />
+                <span asp-validation-for="quantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="weight" class="control-label">Cân nặng</label>
+                <input asp-for="weight" class="form-control" />
+                <span asp-validation-for="weight" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <label asp-for="description" class="control-label">Mô tả</label>
+                <input asp-for="description" class="form-control" />
+                <span asp-validation-for="description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Thêm" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="List_Product" asp-controller="Product" asp-area="Admin">Danh sách</a>
+
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

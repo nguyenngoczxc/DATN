@@ -1,0 +1,50 @@
+﻿
+
+@model List<TTTN3.Models.product_Image>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Delete Product Images";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Xóa ảnh của sản phẩm</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Delete_Image" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <!-- Display product name and images -->
+            <div class="form-group">
+                <label class="control-label">Sản phẩm</label>
+                <input type="text" value="@ViewData["ProductName"]" class="form-control" readonly />
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Ảnh</label>
+                @foreach (var productImage in Model)
+                {
+                    <div>
+                        <img src="@Url.Content($"~/Images/Product/{productImage.image_Filename}")" alt="Ảnh sản phẩm" class="img-thumbnail" style="max-width: 100px; max-height: 100px;" />
+                    </div>
+                }
+            </div>
+
+            <!-- Hidden field for product_Code -->
+            <input type="hidden" name="product_Code" value="@ViewData["ProductCode"]" />
+
+            <!-- Confirm deletion -->
+            <div class="form-group">
+                <p>Bạn chắc chắn muốn xóa ?</p>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Xóa" class="btn btn-danger" />
+                <a asp-action="List_Image" asp-area="Admin" asp-controller="product_Image" class="btn btn-secondary">Hủy</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+

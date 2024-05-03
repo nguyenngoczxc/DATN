@@ -1,0 +1,70 @@
+﻿@model TTTN3.Models.product
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Delete_Product";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div>
+    <h4>product</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Tên
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.product_Name)
+        </dd>
+        <dt class="col-sm-2">
+            Ảnh đại diện
+        </dt>
+        <dd class="col-sm-10">
+            <img src="@Url.Content("~/Images/Product/" + Model.product_Avatar)" alt="@Model.product_Name" style="max-width: 100px; max-height: 100px;" />
+        </dd>
+        <dt class="col-sm-2">
+            Số lượng
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.quantity)
+        </dd>
+        <dt class="col-sm-2">
+           Cân nặng
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.weight)
+        </dd>
+       
+        <dt class="col-sm-2">
+            Mô tả
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.description)
+        </dd>
+        <dt class="col-sm-2">
+            Nhà sản xuất
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.brand.brand_Name)
+        </dd>
+        <dt class="col-sm-2">
+            Kiểu khóa
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.zipper.zipper_Name)
+        </dd>
+        <dt class="col-sm-2">
+            Kiểu bánh xe
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.wheel.wheel_Name)
+        </dd>
+        <dt class="col-sm-2">
+            Chất liệu
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.material.material_Name)
+        </dd>
+    </dl>
+
+</div>
