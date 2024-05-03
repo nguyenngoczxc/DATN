@@ -1,0 +1,165 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<!-- BAR CHART -->
+<section class="content">
+   
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Thống kê doanh thu</h3>
+
+            <div class="card-tools">
+                <div class="row">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="startDate">Ngày bắt đầu:</label>
+                            <input type="date" id="startDate" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="endDate">Ngày kết thúc:</label>
+                            <input type="date" id="endDate" class="form-control">
+                        </div>
+                        <button id="filterButton" class="btn btn-primary">Lọc</button>
+                        <div class="form-group mt-2">
+                            <label for="totalRevenue">Doanh thu:</label>
+                            <input type="text" id="totalRevenue" class="form-control" readonly>
+                        </div>
+                    </div>
+                <div class="col-md-8">
+                    <div class="chart">
+                        <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Ngày</th>
+                                <th>Doanh thu</th>
+                            </tr>
+                        </thead>
+                        <tbody id="load_data"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+@section scripts {
+    @* <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script> *@
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../../LayoutAdmin/assets/js/Chat.min.js"></script>
+    <script src="../../LayoutAdmin/assets/js/moment.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            var arrDoanhThu = [];
+            var arrDate = []; 
+            var totalRevenue = 0;
+
+            console.log('jQuery version:', $.fn.jquery);
+            console.log('Moment.js version:', moment.version);
+            function fetchData(fromDate, toDate) {
+                $.ajax({
+                    url: '/admin/homeadmin/GetStatistical',
+                    type: 'GET',
+                    data: {
+                        fromDate: fromDate,
+                        toDate: toDate
+                    },
+                    success: function (rs) {
+                        if (rs.data) {
+
+                            $.each(rs.data, function (i, item) {
+                                console.log('Item:', item);
+                                arrDate.push(item.date);
+                                arrDoanhThu.push(item.doanhThu);
+                                totalRevenue += parseFloat(item.doanhThu);
+                            });
+
+
+                            var areaChartData = {
+                                labels: arrDate,
+                                datasets: [
+                                    {
+                                        label: 'Doanh thu',
+                                        backgroundColor: 'rgba(210, 214, 222, 1)',
+                                        borderColor: 'rgba(210, 214, 222, 1)',
+                                        pointRadius: false,
+                                        pointColor: 'rgba(210, 214, 222, 1)',
+                                        pointStrokeColor: '#c1c7d1',
+                                        pointHighlightFill: '#fff',
+                                        pointHighlightStroke: 'rgba(220,220,220,1)',
+                                        data: arrDoanhThu
+                                    },
+                                ]
+                            };
+
+                            var barChartCanvas = $('#barChart').get(0).getContext('2d');
+                            var barChartData = $.extend(true, {}, areaChartData);
+                            var barChartOptions = {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                datasetFill: false
+                            };
+
+                            new Chart(barChartCanvas, {
+                                type: 'bar',
+                                data: barChartData,
+                                options: barChartOptions
+                            });
+
+                            load_data(rs.data);
+                        } else {
+                            console.log('Data from server is empty or not in the expected format.');
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.log('Ajax error:', status, error);
+                    }
+                });
+            }
+
+            function load_data(data) {
+                var strHtml = "";
+                $.each(data, function (i, item) {
+                    strHtml += "<tr>";
+                    strHtml += "<td>" + (i + 1) + "</td>";
+                    strHtml += "<td>" + item.date + "</td>";
+                    strHtml += "<td>" + item.doanhThu + "</td>";
+                    strHtml += "</tr>";
+                });
+                $('#load_data').html(strHtml);
+                $('#totalRevenue').val(totalRevenue);
+            }
+            $('#filterButton').on('click', function () {
+                // Get start date and end date values
+                var fromDate = $('#startDate').val();
+                var toDate = $('#endDate').val();
+
+                // Fetch data based on the specified date range
+                fetchData(fromDate, toDate);
+            });
+        });
+    </script>
+}
+
