@@ -97,32 +97,35 @@ namespace TTTN3.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit_Blog(blog blogUp, IFormFile anhDaiDienFile)
         {
-            if(ModelState.IsValid)
+            try
             {
-                try
+                blogUp.blog_Date = DateTime.Now;
+                var exiting = db.blogs.Find(blogUp.blog_Code);
+                if (anhDaiDienFile != null && anhDaiDienFile.Length > 0)
                 {
-                    blogUp.blog_Date = DateTime.Now;
-                   // blogUp.blog_Code = db.blogs.Find(blogUp.blog_Code).blog_Code;
-                    if (anhDaiDienFile != null && anhDaiDienFile.Length > 0)
-                    {
-                        string uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(anhDaiDienFile.FileName);
-                        string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "Images/Blog");
-                        string filePath = Path.Combine(uploadFolder, uniqueFileName);
+                    string uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(anhDaiDienFile.FileName);
+                    string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "Images/Blog");
+                    string filePath = Path.Combine(uploadFolder, uniqueFileName);
 
-                        using (var stream = new FileStream(filePath, FileMode.Create))
-                        {
-                            anhDaiDienFile.CopyTo(stream);
-                        }
-                        blogUp.blog_Image = uniqueFileName;
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        anhDaiDienFile.CopyTo(stream);
                     }
-                    db.Entry(blogUp).State = EntityState.Modified;
-                    db.SaveChanges();
-                    return RedirectToAction("List_Blog", "Blog");
+                    exiting.blog_Image = uniqueFileName;
                 }
-                catch (Exception ex)
+
+                else
                 {
-                    ModelState.AddModelError("", "Error: " + ex.Message);
+                    exiting.blog_Image = exiting.blog_Image;
                 }
+                exiting.blog_Title = blogUp.blog_Title;
+                exiting.blog_Detail = blogUp.blog_Detail;
+                db.SaveChanges();
+                return RedirectToAction("List_Blog", "Blog");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "Error: " + ex.Message);
             }
             return View(blogUp);
         }

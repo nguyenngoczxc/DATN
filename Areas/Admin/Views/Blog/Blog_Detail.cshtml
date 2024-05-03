@@ -2,18 +2,18 @@
 @model TTTN3.Models.blog
 
 @{
-    ViewData["Title"] = "Blog detail";
+    ViewData["Title"] = "Tin tức";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>Blog detail</h1>
+<h1>Chi tiết tin tức</h1>
 
 <div>
-    <h4>Blog</h4>
+    <h4>Tin tức</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            Title
+            Tiêu đề
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.blog_Title)
@@ -26,28 +26,28 @@
         </dd> *@
         
         <dt class = "col-sm-2">
-            Image
+            Ảnh đại diện
         </dt>
         <dd class="col-sm-10">
             <img src="@Url.Content("~/Images/Blog/" + Model.blog_Image)" alt="@Model.blog_Title" style="max-width: 100px; max-height: 100px;" />
 
         </dd>
         <dt class = "col-sm-2">
-            Date create
+            Ngày tạo
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.blog_Date)
         </dd>
         <dt class="col-sm-2">
-            Detail
+            Chi tiết
         </dt>
         <dd class="col-sm-10">
             @Html.Raw(Model.blog_Detail)
         </dd>
     </dl>
 <div>
-    <a asp-action="Edit_Blog" asp-route-blog_Code="@Model?.blog_Code" asp-controller="Blog" asp-area="Admin">Edit</a> |
-    <a asp-action="List_Blog" asp-area="Admin" asp-controller="Blog">Blog list</a>
+    <a asp-action="Edit_Blog" asp-route-blog_Code="@Model?.blog_Code" asp-controller="Blog" asp-area="Admin">Sửa</a> |
+    <a asp-action="List_Blog" asp-area="Admin" asp-controller="Blog">Danh sách</a>
 </div>
 </div>
     @* <form method="post" asp-action="Delete_BlogConfirmed" asp-route-brand_Code="@ViewBag.BlogCode" id="deleteForm">

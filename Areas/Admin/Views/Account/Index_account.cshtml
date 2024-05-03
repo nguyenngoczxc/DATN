@@ -5,13 +5,11 @@
 @model X.PagedList.IPagedList<AppUserModel>
 @inject UserManager<AppUserModel> _userManager
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Danh sách tài khoản";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<p>
-    <a asp-action="Create_account">Create </a>
-</p>
+<h1>Danh sách tài khoản</h1>
 <div class="row">
     <div class="col-6">
         @using (Html.BeginForm("Index", "account", FormMethod.Get, new { }))
@@ -20,7 +18,7 @@
                 @Html.TextBox("SearchText", null, new { @class = "form-control" })
                 @*<input type="text" name="searchtext" class="form-control" />*@
                 <span class="input-group-append">
-                    <button type="submit" class="btn btn-info btn-flat">Search</button>
+                    <button type="submit" class="btn btn-info btn-flat">Tìm</button>
                 </span>
             </div>
         }
@@ -34,16 +32,16 @@
                 STT
             </th>
             <th>
-                Id
+                Mã
             </th>
             <th>
-                User name
+                Tên người dùng
             </th>
             <th>
                 Email
             </th>
             <th>
-                Role
+                Quyền
             </th>
             <th></th>
         </tr>
@@ -78,8 +76,8 @@
                     }
                 </td>
                 <td>
-                    <a asp-action="AddRole" asp-route-Id="@item.Id" >AddRole</a> |
-                    <a asp-action="Delete_account" asp-route-Id="@item.Id">Delete</a>
+                    <a asp-action="AddRole" asp-route-Id="@item.Id" >Thêm quyền</a> |
+                    <a asp-action="Delete_account" asp-route-Id="@item.Id">Xóa</a>
                 </td>
             </tr>
             i++;

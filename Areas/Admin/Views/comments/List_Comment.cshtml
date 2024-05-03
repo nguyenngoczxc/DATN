@@ -7,11 +7,11 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>List comment</h1>
+<h1>Danh sách bình luận</h1>
 
-<p>
+@* <p>
     <a asp-action="Create_Comment">Create New</a>
-</p>
+</p> *@
 <div class="row">
     <div class="col-6">
         @using (Html.BeginForm("List_Comment", "comments", FormMethod.Get, new { }))
@@ -20,7 +20,7 @@
                 @Html.TextBox("SearchText", null, new { @class = "form-control" })
                 @*<input type="text" name="searchtext" class="form-control" />*@
                 <span class="input-group-append">
-                    <button type="submit" class="btn btn-info btn-flat">Search</button>
+                    <button type="submit" class="btn btn-info btn-flat">Tìm</button>
                 </span>
             </div>
         }
@@ -32,16 +32,16 @@
         <tr>
             <th>STT</th>
             <th>
-                Comment code
+                Mã
             </th>
             <th>
-                Content
+                Nội dung
             </th>
             <th>
-                Product name
+                Sản phẩm
             </th>
             <th>
-                Customer name
+                Khách hàng
             </th>
             <th></th>
         </tr>
@@ -69,9 +69,9 @@
                     @Html.DisplayFor(modelItem => item.AspNetUser.UserName)
             </td>
             <td>
-                    <a asp-action="Edit_Comment" asp-route-comment_Code="@item.comment_Code">Edit</a> |
-                    <a asp-action="Details_Comment" asp-route-comment_Code="@item.comment_Code">Details</a> |
-                    <a asp-action="Delete_Comment" asp-route-comment_Code="@item.comment_Code">Delete</a>
+                    @* <a asp-action="Edit_Comment" asp-route-comment_Code="@item.comment_Code">Edit</a> | *@
+                    <a asp-action="Details_Comment" asp-route-comment_Code="@item.comment_Code">Chi tiết</a> |
+                    @* <a asp-action="Delete_Comment" asp-route-comment_Code="@item.comment_Code">Delete</a> *@
             </td>
         </tr>
         i++;

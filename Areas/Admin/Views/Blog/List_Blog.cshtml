@@ -8,10 +8,10 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>List blog</h1>
+<h1>Danh sách tin tức</h1>
 
 <p>
-    <a asp-action="Create_Blog">Create New</a>
+    <a asp-action="Create_Blog">Thêm mới</a>
 </p>
 <p>
     @TempData["Message"]
@@ -29,7 +29,7 @@
                 @Html.TextBox("SearchText", null, new { @class = "form-control" })
                 @*<input type="text" name="searchtext" class="form-control" />*@
                 <span class="input-group-append">
-                    <button type="submit" class="btn btn-info btn-flat">Search</button>
+                    <button type="submit" class="btn btn-info btn-flat">Tìm</button>
                 </span>
             </div>
         }
@@ -40,22 +40,22 @@
     <thead >
         <tr>
             <th>
-                #
+                STT
             </th>
             <th>
-                Blog code
+                Mã
             </th>
             <th>
-                Title
+                Tiêu đề
             </th>
             @*  <th>
             Alias
             </th> *@
             <th>
-                Blog image
+                Ảnh đại diện
             </th>
             <th>
-                Create date
+                Ngày tạo
             </th>
             <th></th>
         </tr>
@@ -88,9 +88,9 @@
                     @Html.DisplayFor(modelItem => item.blog_Date)
                 </td>
                 <td>
-                    <a asp-action="Edit_Blog" asp-route-blog_Code="@item.blog_Code">Edit</a> |
-                    <a asp-action="Blog_Detail" asp-route-blog_Code="@item.blog_Code">Details</a> |
-                    <a asp-action="Delete_Blog" asp-route-blog_Code="@item.blog_Code">Delete</a>
+                    <a asp-action="Edit_Blog" asp-route-blog_Code="@item.blog_Code">Sửa</a> |
+                    <a asp-action="Blog_Detail" asp-route-blog_Code="@item.blog_Code">Chi tiết</a> |
+                    <a asp-action="Delete_Blog" asp-route-blog_Code="@item.blog_Code">Xóa</a>
                 </td>
             </tr>
             i++;

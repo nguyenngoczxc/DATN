@@ -8,10 +8,10 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>Color list</h1>
+<h1>Danh sách màu sắc</h1>
 
 <p>
-    <a asp-action="Create_Color">Create </a>
+    <a asp-action="Create_Color">Thêm mới </a>
 </p>
 <div class="row">
     <div class="col-6">
@@ -21,7 +21,7 @@
                 @Html.TextBox("SearchText", null, new { @class = "form-control" })
                 @*<input type="text" name="searchtext" class="form-control" />*@
                 <span class="input-group-append">
-                    <button type="submit" class="btn btn-info btn-flat">Search</button>
+                    <button type="submit" class="btn btn-info btn-flat">Tìm</button>
                 </span>
             </div>
         }
@@ -35,10 +35,10 @@
                 STT
             </th>
             <th>
-                color code
+                Mã
             </th>
             <th>
-                color name
+                Màu
             </th>
             <th></th>
         </tr>
@@ -61,8 +61,8 @@
                     @Html.DisplayFor(modelItem => item.color_Name)
                 </td>
                 <td>
-                    <a asp-action="Edit_Color" asp-route-color_Code="@item.color_Code">Edit</a> |
-                    <a asp-action="Delete_Color" asp-route-color_Code="@item.color_Code">Delete</a>
+                    <a asp-action="Edit_Color" asp-route-color_Code="@item.color_Code">Sửa</a> |
+                    <a asp-action="Delete_Color" asp-route-color_Code="@item.color_Code">Xóa</a>
                 </td>
             </tr>
             i++;

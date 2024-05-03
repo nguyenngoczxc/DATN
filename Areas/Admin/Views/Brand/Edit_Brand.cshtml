@@ -6,33 +6,33 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>Edit_Brand</h1>
+<h1>Sửa</h1>
 
-<h4>brand</h4>
+<h4>Nhà sản xuất</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit_Brand" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="brand_Code" class="control-label">Brand code</label>
+                <label asp-for="brand_Code" class="control-label">Mã</label>
                 <input asp-for="brand_Code" class="form-control" readonly />
                 <span asp-validation-for="brand_Code" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="brand_Name" class="control-label">Brand name</label>
+                <label asp-for="brand_Name" class="control-label">Nhà sản xuất</label>
                 <input asp-for="brand_Name" class="form-control" />
                 <span asp-validation-for="brand_Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Sửa" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="List_Brand" asp-controller="Brand" asp-area="Admin"> Brand list</a>
+    <a asp-action="List_Brand" asp-controller="Brand" asp-area="Admin">Danh sách</a>
 
 </div>
 
