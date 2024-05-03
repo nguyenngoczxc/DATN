@@ -44,6 +44,10 @@
         a:hover, a:focus {
             color: black;
         }
+
+        .header__menu ul li {
+            margin-right: 30px;
+        }
     </style>
 </head>
 
@@ -62,8 +66,8 @@
                     <div class="col-lg-6 col-md-6">
                         <div class="header__top__left">
                             <ul>
-                                <li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
-                                <li>Free Shipping for all Order of $99</li>
+                                <li><i class="fa fa-envelope"></i>minhngoc@gmail.com</li>
+                                <li>Giao hàng miễn phí cho tất cả đơn hàng trị giá từ 99kVND</li>
                             </ul>
                         </div>
                     </div>
@@ -80,18 +84,18 @@
 
                                     <span class="arrow_carrot-down"></span>
                                     <ul style="width:150px; margin-top:10px">
-                                        <li><a asp-action="Edit" asp-controller="Account"><i class="fa fa-user"></i> Profile</a></li>
-                                        <li><a asp-action="Logout" asp-controller="Account"><i class="fa fa-user"></i> Logout</a></li>
-                                        <li><a asp-action="List_Invoice" asp-controller="Invoice" asp-route-Id="@userId"><i class="fa fa-user"></i> Purchase history</a></li>
+                                        <li><a asp-action="Edit" asp-controller="Account"><i class="fa fa-user"></i> Hồ sơ</a></li>
+                                        <li><a asp-action="Logout" asp-controller="Account"><i class="fa fa-user"></i> Đăng xuất</a></li>
+                                        <li><a asp-action="List_Invoice" asp-controller="Invoice" asp-route-Id="@userId"><i class="fa fa-user"></i>Đơn hàng</a></li>
                                     </ul>
                                 }
                                 else
                                 {
-                                    <div>Account </div>
+                                    <div>Tài khoản </div>
                                     <span class="arrow_carrot-down"></span>
                                     <ul style="width:150px">
-                                        <li><a asp-action="Login" asp-controller="Account"><i class="fa fa-user"></i> Login</a></li>
-                                        <li> <a asp-action="Register" asp-controller="Account"><i class="fa fa-user"></i> Register</a></li>
+                                        <li><a asp-action="Login" asp-controller="Account"><i class="fa fa-user"></i> Đăng nhập</a></li>
+                                        <li> <a asp-action="Register" asp-controller="Account"><i class="fa fa-user"></i> Đăng ký</a></li>
                                     </ul>
                                 }
                             </div>
@@ -115,22 +119,27 @@
                                 if (ViewContext.RouteData.Values["Controller"].ToString() == "Home" && ViewContext.RouteData.Values["Action"].ToString() == "Index") {
                                     <text>active</text>
  }
-}"> <a asp-controller="Home" asp-action="Index">Home</a></li>
+}"> <a asp-controller="Home" asp-action="Index">Trang chủ</a></li>
                             <li class="@{
                                 if (ViewContext.RouteData.Values["Controller"].ToString() == "Shop" && ViewContext.RouteData.Values["Action"].ToString() == "Index") {
                                     <text>active</text>
  }
-}"> <a asp-controller="Shop" asp-action="Index">Shop</a></li>
+}"> <a asp-controller="Shop" asp-action="Index">Sản phẩm</a></li>
                             <li class="@{
                                 if (ViewContext.RouteData.Values["Controller"].ToString() == "Blog" && ViewContext.RouteData.Values["Action"].ToString() == "Index") {
                                     <text>active</text>
  }
-}"> <a asp-controller="Blog" asp-action="Index">Blog</a></li>
+}"> <a asp-controller="Blog" asp-action="Index">Tin tức</a></li>
                             <li class="@{
                                 if (ViewContext.RouteData.Values["Controller"].ToString() == "Contact" && ViewContext.RouteData.Values["Action"].ToString() == "Index") {
                                     <text>active</text>
  }
-}"> <a asp-controller="Contact" asp-action="Index">Contact</a></li>
+}"> <a asp-controller="Contact" asp-action="Index">Liên hệ</a></li>
+                            <li class="@{
+                                if (ViewContext.RouteData.Values["Controller"].ToString() == "Promotion" && ViewContext.RouteData.Values["Action"].ToString() == "Index") {
+                                                <text>active</text>
+ }
+}"> <a asp-controller="Promotion" asp-action="Promotion_Detail">Khuyến mại</a></li>
                         </ul>
 
                     </nav>
@@ -164,7 +173,7 @@
                     <div class="hero__categories">
                         <div class="hero__categories__all">
                             <i class="fa fa-bars"></i>
-                            <span>Material</span>
+                            <span>Chất liệu</span>
                         </div>
                         @await Component.InvokeAsync("Material")
 
@@ -175,8 +184,8 @@
                         <div class="hero__search__form">
                             @using (Html.BeginForm("Index", "Shop", FormMethod.Get, new { }))
                             {
-                                    <input type="text" name="searchTerm" placeholder="What do you need?">
-                                    <button type="submit" class="site-btn">SEARCH</button>
+                                    <input type="text" name="searchTerm" placeholder="Bạn cần gì?">
+                                    <button type="submit" class="site-btn">Tìm</button>
                             }
                         </div>
                         <div class="hero__search__phone">
@@ -184,8 +193,8 @@
                                 <i class="fa fa-phone"></i>
                             </div>
                             <div class="hero__search__phone__text">
-                                <h5>+65 11.188.888</h5>
-                                <span>support 24/7 time</span>
+                                <h5>0796005800</h5>
+                                <span>Hỗ trợ 24/7</span>
                             </div>
                         </div>
                     </div>
@@ -214,15 +223,15 @@
                             <a asp-controller="Home" asp-action="Index"><img src="~/LayoutOgani/img/logo1.png" alt=""></a>
                         </div>
                         <ul>
-                            <li>Address: Minh Khai, Bac Tu Liem, HN</li>
-                            <li>Phone: +65 11.188.888</li>
+                            <li>Địa chỉ: Minh Khai, Bac Tu Liem, HN</li>
+                            <li>Liên hệ: 0796005800</li>
                             <li>Email: minhngoc@gmail.com</li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
                     <div class="footer__widget">
-                        <h6>Useful Links</h6>
+                        @* <h6>Useful Links</h6>
                         <ul>
                             <li><a href="#">About Us</a></li>
                             <li><a href="#">About Our Shop</a></li>
@@ -238,16 +247,16 @@
                             <li><a href="#">Contact</a></li>
                             <li><a href="#">Innovation</a></li>
                             <li><a href="#">Testimonials</a></li>
-                        </ul>
+                        </ul> *@
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-12">
                     <div class="footer__widget">
-                        <h6>Join Our Newsletter Now</h6>
-                        <p>Get E-mail updates about our latest shop and special offers.</p>
+                        <h6>Tham gia bản tin của chúng tôi ngay bây giờ</h6>
+                        <p>Nhận thông tin cập nhật qua E-mail về cửa hàng mới nhất và các ưu đãi đặc biệt của chúng tôi.</p>
                         <form action="#">
-                            <input type="text" placeholder="Enter your mail">
-                            <button type="submit" class="site-btn">Subscribe</button>
+                            <input type="text" placeholder="Nhập thư của bạn">
+                            <button type="submit" class="site-btn">Gửi</button>
                         </form>
                         <div class="footer__widget__social">
                             <a href="#"><i class="fa fa-facebook"></i></a>
@@ -258,7 +267,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            @* <div class="row">
                 <div class="col-lg-12">
                     <div class="footer__copyright">
                         <div class="footer__copyright__text">
@@ -271,7 +280,7 @@
                         <div class="footer__copyright__payment"><img src="~/LayoutOgani/img/payment-item.png" alt=""></div>
                     </div>
                 </div>
-            </div>
+            </div> *@
         </div>
     </footer>
     <!-- Footer Section End -->
