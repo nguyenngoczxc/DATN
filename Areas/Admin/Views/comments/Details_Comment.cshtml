@@ -6,32 +6,31 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>Details</h1>
+<h1>Chi tiết bình luận</h1>
 
 <div>
-    <h4>comment</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            Comment code
+            Mã
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.comment_Code)
         </dd>
         <dt class="col-sm-2">
-            Product
+            Sản phẩm
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.product.product_Name)
         </dd>
         <dt class="col-sm-2">
-            Customer
+            Khách hàng
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.AspNetUser.UserName)
         </dd>
         <dt class = "col-sm-2">
-            Content
+            Nội dung
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.content)
@@ -41,7 +40,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit_Comment" asp-route-comment_Code="@Model?.comment_Code">Edit</a> |
-    <a asp-action="List_Comment" asp-area="Admin" asp-controller="comments">Back to list</a>
-
+    <a asp-action="Edit_Comment" asp-route-comment_Code="@Model?.comment_Code">Sửa</a> |
+    <a asp-action="List_Comment" asp-area="Admin" asp-controller="comments">Danh sách</a>
 </div>

@@ -6,33 +6,33 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>Edit_color</h1>
+<h1>Sửa màu sắc</h1>
 
-<h4>color</h4>
+<h4>Màu sắc</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit_Color" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="color_Code" class="control-label">color code</label>
+                <label asp-for="color_Code" class="control-label">Mã</label>
                 <input asp-for="color_Code" class="form-control" readonly />
                 <span asp-validation-for="color_Code" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="color_Name" class="control-label">color name</label>
+                <label asp-for="color_Name" class="control-label">Màu</label>
                 <input asp-for="color_Name" class="form-control" />
                 <span asp-validation-for="color_Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Thêm" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="List_Color" asp-controller="Color" asp-area="Admin"> color list</a>
+    <a asp-action="List_Color" asp-controller="Color" asp-area="Admin">Danh sách</a>
 
 </div>
 

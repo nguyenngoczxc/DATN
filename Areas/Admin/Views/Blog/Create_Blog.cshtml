@@ -2,13 +2,13 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
-    ViewData["Title"] = "Create blog";
+    ViewData["Title"] = "Thêm tin tức";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>Create blog</h1>
+<h1>Thêm tin tức</h1>
 
-<h4>Blog</h4>
+<h4>Tin tức</h4>
 <hr />
 <div class="row">
     <div class="col">
@@ -20,7 +20,7 @@
                 <span asp-validation-for="blog_Code" class="text-danger"></span>
             </div> *@
             <div class="form-group">
-                <label asp-for="blog_Title" class="control-label">Blog title</label>
+                <label asp-for="blog_Title" class="control-label">Tiêu đề</label>
                 <input asp-for="blog_Title" class="form-control" />
                 <span asp-validation-for="blog_Title" class="text-danger"></span>
             </div>
@@ -30,13 +30,13 @@
             <span asp-validation-for="alias" class="text-danger"></span>
             </div> *@
             <div class="form-group">
-                <label asp-for="blog_Detail" class="control-label">Blog detail</label>
+                <label asp-for="blog_Detail" class="control-label">Chi tiết</label>
                 @* <input asp-for="blog_Detail" class="form-control" /> *@
                 <textarea asp-for="blog_Detail" class="form-control" id="editor"></textarea>
                 <span asp-validation-for="blog_Detail" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="blog_Image" class="control-label">Blog image</label>
+                <label asp-for="blog_Image" class="control-label">Ảnh đại diện</label>
                 @* <input asp-for="blog_Image" class="form-control" /> *@
                 <input type="file" asp-for="blog_Image" name="anhDaiDienFile" class="form-control" />
                 <span asp-validation-for="blog_Image" class="text-danger"></span>
@@ -47,13 +47,13 @@
             <span asp-validation-for="blog_Date" class="text-danger"></span>
             </div> *@
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Thêm" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="List_Blog" asp-area="Admin" asp-controller="Blog">List blog</a>
+    <a asp-action="List_Blog" asp-area="Admin" asp-controller="Blog">Danh sách</a>
 </div>
 

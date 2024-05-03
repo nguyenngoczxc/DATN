@@ -117,6 +117,7 @@
     <Folder Include="Migrations\" />
     <Folder Include="Views\Error\" />
     <Folder Include="wwwroot\Images\Blog\" />
+    <Folder Include="wwwroot\Images\Promotion\" />
     <Folder Include="wwwroot\Images\Product\" />
     <Folder Include="wwwroot\LayoutAdmin\assets\chart.js\" />
   </ItemGroup>

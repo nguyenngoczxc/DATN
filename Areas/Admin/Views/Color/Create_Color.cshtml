@@ -6,9 +6,9 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>Create color</h1>
+<h1>Thêm màu sắc</h1>
 
-<h4>color</h4>
+<h4>Màu sắc</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -20,19 +20,19 @@
             <span asp-validation-for="color_Code" class="text-danger"></span>
             </div> *@
             <div class="form-group">
-                <label asp-for="color_Name" class="control-label">Color name</label>
+                <label asp-for="color_Name" class="control-label">Màu</label>
                 <input asp-for="color_Name" class="form-control" />
                 <span asp-validation-for="color_Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Thêm" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="List_Color" asp-controller="Color" asp-area="Admin"> Color list</a>
+    <a asp-action="List_Color" asp-controller="Color" asp-area="Admin">Danh sách</a>
 
 </div>
 

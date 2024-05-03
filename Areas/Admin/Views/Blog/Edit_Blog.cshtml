@@ -6,21 +6,20 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>Edit_Blog</h1>
+<h1>Sửa tin tức</h1>
 
-<h4>blog</h4>
+<h4>Tin tức</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
         <form asp-action="Edit_Blog" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="blog_Code" class="control-label">Blog code</label>
+                <label asp-for="blog_Code" class="control-label">Mã </label>
                 <input asp-for="blog_Code" class="form-control" readonly/>
                 <span asp-validation-for="blog_Code" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="blog_Title" class="control-label">Blog title</label>
+                <label asp-for="blog_Title" class="control-label">Tiêu đề</label>
                 <input asp-for="blog_Title" class="form-control" />
                 <span asp-validation-for="blog_Title" class="text-danger"></span>
             </div>
@@ -30,7 +29,7 @@
                 <span asp-validation-for="alias" class="text-danger"></span>
             </div> *@
             <div class="form-group">
-                <label asp-for="blog_Detail" class="control-label">Blog detail</label>
+                <label asp-for="blog_Detail" class="control-label">Chi tiết</label>
                 @* <input asp-for="blog_Detail" class="form-control" /> *@
                 <textarea asp-for="blog_Detail" class="form-control" id="editor"></textarea>
                 <span asp-validation-for="blog_Detail" class="text-danger"></span>
@@ -39,7 +38,9 @@
                 @* <label asp-for="blog_Image" class="control-label"></label>
                 <input asp-for="blog_Image" class="form-control" />
                 <span asp-validation-for="blog_Image" class="text-danger"></span> *@
-                <label asp-for="blog_Image" class="control-label">Blog image</label>
+                <label asp-for="blog_Image" class="control-label">Ảnh đại diện</label>
+                <img src="@Url.Content($"~/Images/Blog/" +Model.blog_Image )" alt="Blog Image" class="img-thumbnail" style="max-width: 100px; max-height: 100px;" />
+
                 <input type="file" asp-for="blog_Image" name="anhDaiDienFile" class="form-control" />
                 <span asp-validation-for="blog_Image" class="text-danger"></span>
             </div>
@@ -49,13 +50,13 @@
                 <span asp-validation-for="blog_Date" class="text-danger"></span>
             </div> *@
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Sửa" class="btn btn-primary" />
             </div>
         </form>
     </div>
-</div>
+
 
 <div>
-    <a asp-action="List_Blog" asp-area="Admin" asp-controller="Blog">Blog list</a>
+    <a asp-action="List_Blog" asp-area="Admin" asp-controller="Blog">Danh sách</a>
 </div>
 
