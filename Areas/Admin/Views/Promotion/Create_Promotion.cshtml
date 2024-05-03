@@ -1,0 +1,58 @@
+﻿@model TTTN3.Models.promotion
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Thêm khuyến mãi";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Thêm khuyến mãi</h1>
+ 
+<hr />
+<div class="row">
+    <div class="col">
+        <form method="post" enctype="multipart/form-data" asp-action="Create_Promotion">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @* <div class="form-group">
+            <label asp-for="promotion_Code" class="control-label">promotion code</label>
+            <input asp-for="promotion_Code" class="form-control"  />
+            <span asp-validation-for="promotion_Code" class="text-danger"></span>
+            </div> *@
+            <div class="form-group">
+                <label asp-for="promotion_Title" class="control-label">Tên khuyến mại</label>
+                <input asp-for="promotion_Title" class="form-control" />
+                <span asp-validation-for="promotion_Title" class="text-danger"></span>
+            </div>
+            @* <div class="form-group">
+            <label asp-for="alias" class="control-label"></label>
+            <input asp-for="alias" class="form-control" />
+            <span asp-validation-for="alias" class="text-danger"></span>
+            </div> *@
+            <div class="form-group">
+                <label asp-for="promotion_Detail" class="control-label">Nội dung</label>
+                @* <input asp-for="promotion_Detail" class="form-control" /> *@
+                <textarea asp-for="promotion_Detail" class="form-control" id="editor"></textarea>
+                <span asp-validation-for="promotion_Detail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="promotion_Image" class="control-label">Ảnh đại diện</label>
+                @* <input asp-for="promotion_Image" class="form-control" /> *@
+                <input type="file" asp-for="promotion_Image" name="anhDaiDienFile" class="form-control" />
+                <span asp-validation-for="promotion_Image" class="text-danger"></span>
+            </div>
+            @* <div class="form-group">
+            <label asp-for="promotion_Date" class="control-label"></label>
+            <input asp-for="promotion_Date" class="form-control" />
+            <span asp-validation-for="promotion_Date" class="text-danger"></span>
+            </div> *@
+            <div class="form-group">
+                <input type="submit" value="Thêm" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="List_Promotion" asp-area="Admin" asp-controller="Promotion">Danh sách</a>
+</div>
+

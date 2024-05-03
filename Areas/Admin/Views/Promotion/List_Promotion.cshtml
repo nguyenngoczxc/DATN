@@ -1,0 +1,152 @@
+﻿@using X.PagedList.Mvc.Core
+@using TTTN3.Models
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model X.PagedList.IPagedList<promotion>
+
+@{
+    ViewData["Title"] = "Danh sách khuyến mãi";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Danh sách khuyến mãi</h1>
+
+<p>
+    <a asp-action="Create_Promotion">Thêm</a>
+</p>
+<p>
+    @TempData["Message"]
+</p>
+<style>
+    .table th, .table td {
+        width: 10%;
+    }
+</style>
+<div class="row">
+    <div class="col-6">
+        @using (Html.BeginForm("List_Promotion", "Promotion", FormMethod.Get, new { }))
+        {
+            <div class="input-group input-group-sm">
+                @Html.TextBox("SearchText", null, new { @class = "form-control" })
+                @*<input type="text" name="searchtext" class="form-control" />*@
+                <span class="input-group-append">
+                    <button type="submit" class="btn btn-info btn-flat">Tìm</button>
+                </span>
+            </div>
+        }
+    </div>
+</div>
+<br />
+<table class="table" width="100%">
+    <thead>
+        <tr>
+            <th>
+                #
+            </th>
+            <th>
+                Mã khuyến mãi
+            </th>
+            <th>
+                Tên khuyến mãi
+            </th>
+            @*  <th>
+            Alias
+            </th> *@
+            <th>
+                Ảnh đại diện
+            </th>
+            <th>
+                Hiển thị
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            var i = 0;
+        }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @((Model.PageNumber - 1) * Model.PageSize + i + 1)
+                </td>
+                <td>
+                    <div class="Promotion-code" data-promotion-code="@item.promotion_Code">@Html.DisplayFor(modelItem => item.promotion_Code)</div>
+                </td>
+                <td>
+                    <div class="Promotion-title" data-original-title="@item.promotion_Title">@Html.DisplayFor(modelItem => item.promotion_Title)</div>
+                </td>
+                @* <td>
+            @Html.DisplayFor(modelItem => item.alias)
+            </td> *@
+                <td>
+                    @* @Html.DisplayFor(modelItem => item.Promotion_Image) *@
+
+                    <img src="@Url.Content("~/Images/Promotion/" + item.promotion_Image)" alt="@item.promotion_Title" style="max-width: 100px; max-height: 100px;" />
+                </td>
+                <td>
+                    @if (item.select == true)
+                    {
+                        <input type="checkbox" data-promotion-code="@item.promotion_Code" class="select-checkbox" checked />
+                    }
+                    else
+                    {
+                        <input type="checkbox" data-promotion-code="@item.promotion_Code" class="select-checkbox" />
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit_Promotion" asp-route-Promotion_Code="@item.promotion_Code">Sửa</a> |
+                    <a asp-action="Promotion_Detail" asp-route-Promotion_Code="@item.promotion_Code">Chi tiết</a> |
+                    <a asp-action="Delete_Promotion" asp-route-Promotion_Code="@item.promotion_Code">Xóa</a>
+                </td>
+            </tr>
+            i++;
+        }
+    </tbody>
+</table>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var PromotionTitleElements = document.querySelectorAll('.Promotion-title');
+
+        PromotionTitleElements.forEach(function (element) {
+            var originalTitle = element.getAttribute('data-original-title');
+            var truncatedTitle = originalTitle.length > 20 ? originalTitle.substring(0, 20) + '...' : originalTitle;
+            element.textContent = truncatedTitle;
+        });
+        // Lắng nghe sự kiện change của các ô checkbox với id 'select'
+        $('body').on('change', 'input[type="checkbox"][class="select-checkbox"]', function (e) {
+            // Lấy checkbox được thay đổi
+            var checkbox = $(this);
+            // Lấy giá trị của promotion_Code từ thuộc tính 'data-promotion-code'
+            var promotionCode = checkbox.data("promotion-code");
+            console.log(promotionCode);
+            // Gửi yêu cầu AJAX đến server để cập nhật trạng thái 'select' của promotion_Code
+            $.ajax({
+                url: '/Admin/Promotion/UpdateSelect', // URL endpoint để xử lý yêu cầu
+                type: 'POST', // Sử dụng phương thức POST
+                data: {
+                    promotionCode: promotionCode
+                },
+                success: function (response) {
+                    // Kiểm tra phản hồi từ server
+                    if (response.success) {
+                        console.log('Cập nhật trạng thái thành công.');
+                    } else {
+                        console.error('Có lỗi xảy ra khi cập nhật trạng thái:', response.message);
+                    }
+                },
+                error: function (err) {
+                    // Xử lý lỗi trong quá trình gửi yêu cầu AJAX
+                    console.error('Lỗi trong quá trình gửi yêu cầu AJAX:', err);
+                }
+            });
+        });
+
+    });
+</script>
+@Html.PagedListPager(Model, page => Url.Action("List_Promotion", new { page = page, SearchText = Context.Request.Query["SearchText"] }),
+                            new X.PagedList.Web.Common.PagedListRenderOptions()
+                        {
+                            LiElementClasses = new List<String> { "page-item" },
+                            PageClasses = new List<String> { "page-link" }
+                        })

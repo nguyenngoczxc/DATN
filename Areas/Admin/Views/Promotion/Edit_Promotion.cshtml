@@ -1,0 +1,65 @@
+﻿@model TTTN3.Models.promotion
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Sửa khuyến mại";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Sửa khuyến mại</h1>
+
+<h4>Khuyến mại</h4>
+<hr />
+<div class="row">
+        <form asp-action="Edit_Promotion" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="promotion_Code" class="control-label">Mã khuyến mại</label>
+                <input asp-for="promotion_Code" class="form-control" readonly />
+                <span asp-validation-for="promotion_Code" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="promotion_Title" class="control-label">Tên khuyến mại</label>
+                <input asp-for="promotion_Title" class="form-control" />
+                <span asp-validation-for="promotion_Title" class="text-danger"></span>
+            </div>
+            @*  <div class="form-group">
+            <label asp-for="alias" class="control-label"></label>
+            <input asp-for="alias" class="form-control" />
+            <span asp-validation-for="alias" class="text-danger"></span>
+            </div> *@
+            <div class="form-group">
+                <label asp-for="promotion_Detail" class="control-label">Nội dung</label>
+                @* <input asp-for="promotion_Detail" class="form-control" /> *@
+                <textarea asp-for="promotion_Detail" class="form-control" id="editor"></textarea>
+                <span asp-validation-for="promotion_Detail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @* <label asp-for="promotion_Image" class="control-label"></label>
+                <input asp-for="promotion_Image" class="form-control" />
+                <span asp-validation-for="promotion_Image" class="text-danger"></span> *@
+                <label asp-for="promotion_Image" class="control-label">Ảnh đại diện</label>
+                @if (!string.IsNullOrEmpty(Model.promotion_Image))
+                {
+                    <div>
+                        <img src="@Url.Content("~/Images/Promotion/" + Model.promotion_Image)" alt="Ảnh đại diện" style="max-width: 200px; max-height: 200px;" />
+                    </div>
+                }
+                <input type="file" asp-for="promotion_Image" name="anhDaiDienFile" class="form-control" />
+                <span asp-validation-for="promotion_Image" class="text-danger"></span>
+            </div>
+            @* <div class="form-group">
+            <label asp-for="promotion_Date" class="control-label"></label>
+            <input asp-for="promotion_Date" class="form-control" />
+            <span asp-validation-for="promotion_Date" class="text-danger"></span>
+            </div> *@
+            <div class="form-group">
+                <input type="submit" value="Sửa" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+
+<div>
+    <a asp-action="List_Promotion" asp-area="Admin" asp-controller="Promotion">Danh sách</a>
+</div>
+
