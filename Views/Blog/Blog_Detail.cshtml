@@ -1,0 +1,66 @@
+﻿@model TTTN3.Models.blog
+@{
+    ViewData["Title"] = "Blog_Detail";
+    Layout = "~/Views/Shared/_LayoutOgani.cshtml";
+}
+<style>
+    .spad{
+        padding-top:0px;
+    }
+
+    .input-group-append {
+        border: 1px solid #e1e1e1;
+        color: black;
+    }
+</style>
+<!-- Blog Details Hero Begin -->
+<section class="breadcrumb-section set-bg" data-setbg="@Url.Content("~/Images/Blog/nen.jpg")"
+         style=" background-image: url('@Url.Content("~/Images/Blog/nen.jpg")'); width:100%;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="blog__details__hero__text">
+                    <h2 >@Model.blog_Title</h2>
+                    <h5 style="color:white">@Model.blog_Date</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Blog Details Hero End -->
+<!-- Blog Details Section Begin -->
+<section class="blog-details spad">
+    <div class="container">
+        <div class="col-lg-4 col-md-5">
+            <div class="blog__sidebar">
+                <div class="blog__sidebar__search">
+                    @* <form action="#">
+                    <input type="text" placeholder="Search...">
+                    <button type="submit"><span class="icon_search"></span></button>
+                    </form> *@
+                    @using (Html.BeginForm("Index", "Blog", FormMethod.Get, new { }))
+                    {
+                        <div class="input-group input-group-sm">
+                            @Html.TextBox("SearchText", null, new { @class = "form-control" })
+                            @*<input type="text" name="searchtext" class="form-control" />*@
+                            <span class="input-group-append">
+                                <button type="submit" class="btn btn-info btn-flat" style="background-color:#7fad39; color:white">Tìm</button>
+                            </span>
+                        </div>
+                    }
+                    <br />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+                <div class="blog__details__text">
+                    @Html.Raw(Model.blog_Detail)
+                </div>
+        </div>
+    </div>
+</section>
+<!-- Blog Details Section End -->
+<!-- Related Blog Section Begin -->
+@await Component.InvokeAsync("Blog")
+
+<!-- Related Blog Section End -->
