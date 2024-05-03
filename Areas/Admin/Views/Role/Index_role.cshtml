@@ -1,0 +1,55 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model IEnumerable<IdentityRole>
+@using Microsoft.AspNetCore.Identity
+@{
+    ViewData["Title"] = "List role";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Danh sách quyền</h1>
+
+<p>
+    <a asp-action="Create_role">Thêm quyền </a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                STT
+            </th>
+            <th>
+                Mã
+            </th>
+            <th>
+                Tên
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @{
+            var i = 0;
+        }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @i
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    <a asp-action="Edit_role" asp-route-Id="@item.Id">Sửa</a> |
+                    <a asp-action="Delete_role" asp-route-Id="@item.Id">Xóa</a>
+                </td>
+            </tr>
+            i++;
+        }
+    </tbody>
+</table>
