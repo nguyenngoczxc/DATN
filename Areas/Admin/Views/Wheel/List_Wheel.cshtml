@@ -1,0 +1,51 @@
+﻿@model IEnumerable<TTTN3.Models.wheel>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "List_Wheel";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Danh sách bánh xe</h1>
+
+<p>
+    <a asp-action="Create_Wheel">Thêm</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>STT
+            </th>
+            <th>
+                Mã
+            </th>
+            <th>
+                Bánh xe
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            var i = 1;
+        }
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @i
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.wheel_Code)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.wheel_Name)
+                </td>
+            <td>
+                    <a asp-action="Edit_Wheel" asp-route-wheel_Code="@item.wheel_Code">Sửa</a> |
+                    <a asp-action="Delete_Wheel" asp-route-wheel_Code="@item.wheel_Code">Xóa</a>
+            </td>
+        </tr>
+        i++;
+}
+    </tbody>
+</table>
