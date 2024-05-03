@@ -1,0 +1,91 @@
+﻿@model IEnumerable<TTTN3.Models.invoice_Detail>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Details_Invoice";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Chi tiết hóa đơn</h1>
+<h3>Thông tin người nhận</h3>
+<div style="margin: 20px 0 20px 30px;">
+    <h5>Người nhận hàng: @ViewBag.Username</h5>
+    <h5>Số điện thoại: @ViewBag.Phone</h5>
+    <h5>Địa chỉ: @ViewBag.Address</h5>
+    <h5>Email: @ViewBag.Email</h5>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                STT
+            </th>
+            <th>
+                Hóa đơn
+            </th>
+            <th>
+                Sản phẩm
+            </th>
+            <th>
+                Màu sắc
+            </th>
+            <th>
+                Kích thước
+            </th>
+            <th>
+                Số lượng
+            </th>
+            <th>
+                Giá
+            </th>
+            <th>
+                Thanh toán
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @* @foreach (var (index, item) in Model.Select((invoice_Detail, index) => (index + 1, invoice_Detail))) *@
+        @{
+            var i = 1;
+        }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @i
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.invoice.invoice_Code)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.product.product_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.size.size_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.color.color_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.quantity_Sold)
+                </td>
+                <td>
+                    @{
+                        var Price = string.Format("{0:#,##0} VND", item.price);
+                    }
+                    @Html.Raw(Price)
+                </td>
+                <td>
+                    @{
+                        var totalPrice = item.price * item.quantity_Sold;
+                        var formattedPrice = string.Format("{0:#,##0} VND", totalPrice);
+                    }
+                    @Html.Raw(formattedPrice)
+                </td>
+
+            </tr>
+            i++;
+        }
+    </tbody>
+</table>

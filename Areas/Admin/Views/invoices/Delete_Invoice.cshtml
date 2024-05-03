@@ -1,0 +1,58 @@
+﻿@model TTTN3.Models.invoice 
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Details_Invoice";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Xóa hóa đơn</h1>
+<h3>Bạn chắc chắn muốn xóa?</h3>
+
+<div>
+    <hr />
+    <dl class="row">
+        <!-- Display the invoice details here -->
+        <!-- For example: -->
+        <dt class="col-sm-2">
+            Mã
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.invoice_Code)
+        </dd>
+         <dt class="col-sm-2">
+            Khách hàng
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CustomerName)
+        </dd>
+        <dt class="col-sm-2">
+            Tổng thanh toán
+        </dt>
+        <dd class="col-sm-10">
+            @{
+                var Price = string.Format("{0:#,##0} VND", Model.total_Payment);
+            }
+            @Html.Raw(Price)
+        </dd>
+    </dl>
+@*     <form asp-action="Delete_Invoice" asp-route-invoice_Code="@Model.invoice_Code" method="post">
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        <a asp-action="List_Invoice" class="btn btn-secondary">Cancel</a>
+    </form> *@
+</div>
+<form method="post" asp-action="DeleteConfirmed_Invoice" asp-route-invoice_Code="@Model.invoice_Code" id="deleteForm">
+    @Html.AntiForgeryToken()
+    <button id="deleteButton" type="button" class="btn btn-danger">Xóa</button>
+    <a asp-action="List_Invoice" class="btn btn-secondary">Hủy</a>
+</form>
+
+<script>
+    // JavaScript to handle the confirmation
+    document.getElementById("deleteButton").addEventListener("click", function () {
+        var confirmed = confirm("Bạn chắc chắn muốn xóa?");
+        if (confirmed) {
+            document.getElementById("deleteForm").submit();
+        }
+    });
+</script>

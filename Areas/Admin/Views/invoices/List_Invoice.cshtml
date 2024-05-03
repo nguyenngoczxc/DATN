@@ -1,0 +1,137 @@
+﻿@using X.PagedList.Mvc.Core
+@model X.PagedList.IPagedList<TTTN3.Models.invoice>
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "List Invoice";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Danh sách hóa đơn</h1>
+<div class="row">
+    <div class="col-6">
+        @using (Html.BeginForm("List_Invoice", "invoices", FormMethod.Get, new { }))
+        {
+            <div class="input-group input-group-sm">
+                @Html.TextBox("SearchText", null, new { @class = "form-control" })
+                @*<input type="text" name="searchtext" class="form-control" />*@
+                <span class="input-group-append">
+                    <button type="submit" class="btn btn-info btn-flat">Tìm</button>
+                </span>
+            </div>
+        }
+    </div>
+</div>
+<br />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                STT
+            </th>
+            <th>
+                Mã
+            </th>
+            <th>
+                Khách hàng
+            </th>
+            <th>
+                Thanh toán
+            </th>
+            <th>
+                Hình thức
+            </th>
+            <th>
+                Trạng thái
+            </th>
+            <th>
+                Số lượng
+            </th>
+            <th>
+                Ngày mua
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            var i = 0;
+        }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @((Model.PageNumber - 1) * Model.PageSize + i + 1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.invoice_Code)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustomerName)
+                </td>
+                <td>
+                    @{
+                        var Price = string.Format("{0:#,##0} VND", item.total_Payment);
+                    }
+                    @Html.Raw(Price)
+
+                </td>
+                <td style="color: @(item.type_Payment == 1 ? "red" : "green")">
+                    @* @Html.DisplayFor(modelItem => item.type_Payment) *@
+                    @((item.type_Payment != 1 ||item.status==3) ? "Đã thanh toán" : "Chưa thanh toán")
+                </td>
+                <td style="color: @(item.status == 1 ? "yellow" : (item.status == 2 ? "blue" : (item.status == 3 ? "green" : "red")))">
+                    @switch (item.status)
+                    {
+                        case 1:
+                            <text>Đang xác nhận</text>
+                            break;
+                        case 2:
+                            <text>Đang vận chuyển</text>
+                            break;
+                        case 3:
+                            <text>Hoàn thành</text>
+                            break;
+                        case 4:
+                            <text>Đã hủy</text>
+                            break;
+                        default:
+                            <text>Unknown</text>
+                            break;
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.total_Quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.invoice_Date)
+                </td>
+
+                <td>
+                    <a asp-action="Details_Invoice" asp-route-invoice_Code="@item.invoice_Code">Chi tiết</a>
+                    @if (item.status == 1)
+                    {
+                        <a asp-action="Delete_Invoice" asp-route-invoice_Code="@item.invoice_Code"> | Hủy</a>
+                        <a asp-action="Transport_Invoice" asp-route-invoice_Code="@item.invoice_Code"> | Vận chuyển</a>
+                    }
+                    @if (item.status == 2)
+                    {
+                        <a asp-action="Complete_Invoice" asp-route-invoice_Code="@item.invoice_Code"> | Hoàn thành</a>
+                    }
+                </td>
+            </tr>
+            i++;
+        }
+    </tbody>
+</table>
+@* 
+<div class="pagination">
+    @await Html.PartialAsync("_Pagination", Model)
+</div> *@
+@Html.PagedListPager(Model, page => Url.Action("List_Invoice", new { page = page, SearchText = ViewData["SearchText"] }),
+                    new X.PagedList.Web.Common.PagedListRenderOptions()
+                {
+                    LiElementClasses = new List<String> { "page-item" },
+                    PageClasses = new List<String> { "page-link" }
+                })
