@@ -1,0 +1,43 @@
+﻿@model TTTN3.Models.material
+
+@{
+    ViewData["Title"] = "Create material";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<h1>Thêm mới</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-action="Create_Material" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+           @*  <div class="form-group">
+                <label asp-for="type_Code" class="control-label">Type code</label>
+                <input asp-for="type_Code" class="form-control" />
+                <span asp-validation-for="type_Code" class="text-danger"></span>
+            </div> *@
+            <div class="form-group">
+                <label asp-for="material_Name" class="control-label">Chất liệu</label>
+                <input asp-for="material_Name" class="form-control" />
+                <span asp-validation-for="material_Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Thêm" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="List_Material" asp-controller="MaterialProduct" asp-area="Admin">Danh sách</a>
+
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

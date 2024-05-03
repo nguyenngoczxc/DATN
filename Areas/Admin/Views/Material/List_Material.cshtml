@@ -1,0 +1,75 @@
+﻿@using X.PagedList.Mvc.Core
+@using TTTN3.Models
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model X.PagedList.IPagedList<material>
+
+@{
+    ViewData["Title"] = "Material list";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<h1>Danh sách</h1>
+
+<p>
+    <a asp-action="Create_Material">Thêm</a>
+</p>
+<div class="row">
+    <div class="col-6">
+        @using (Html.BeginForm("List_Material", "MaterialProduct", FormMethod.Get, new { }))
+        {
+            <div class="input-group input-group-sm">
+                @Html.TextBox("SearchText", null, new { @class = "form-control" })
+                @*<input type="text" name="searchtext" class="form-control" />*@
+                <span class="input-group-append">
+                    <button type="submit" class="btn btn-info btn-flat">Tìm</button>
+                </span>
+            </div>
+        }
+    </div>
+</div>
+<br />
+<table class="table">
+    <thead>
+        <tr>
+            <th>STT</th>
+            <th>
+                Mã
+            </th>
+            <th>
+                Chất liệu
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            var i = 0;
+        }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @((Model.PageNumber - 1) * Model.PageSize + i + 1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.material_Code)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.material_Name)
+                </td>
+                <td>
+                    <a asp-action="Edit_Material" asp-route-material_Code="@item.material_Code">Sửa</a> |
+                    <a asp-action="Delete_Material" asp-route-material_Code="@item.material_Code">Xóa</a>
+                </td>
+            </tr>
+            i++;
+        }
+    </tbody>
+</table>
+@Html.PagedListPager(Model, page => Url.Action("List_Material", new { page = page, SearchText = ViewData["SearchText"] }),
+                            new X.PagedList.Web.Common.PagedListRenderOptions()
+                        {
+                            LiElementClasses = new List<String> { "page-item" },
+                            PageClasses = new List<String> { "page-link" }
+                        })

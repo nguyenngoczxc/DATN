@@ -1,0 +1,49 @@
+﻿@model TTTN3.Models.material
+
+@{
+    ViewData["Title"] = "Delete Confirmation";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<h2>Xác nhận xóa</h2>
+
+<p>Bạn chắc chắn xóa?</p>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Mã
+        </dt>
+        <dd class="col-sm-10">
+            @ViewBag.materialCode
+        </dd>
+        <dt class="col-sm-2">
+            Chất liệu
+        </dt>
+        <dd class="col-sm-10">
+            @ViewBag.materialName
+        </dd>
+    </dl>
+    <div>
+        <form method="post" asp-action="Delete_MaterialConfirmed" asp-route-material_Code="@ViewBag.materialCode" id="deleteForm">
+            @Html.AntiForgeryToken()
+            <button id="deleteButton" type="button" class="btn btn-danger">Xóa</button>
+            <a asp-action="List_Material" class="btn btn-secondary">Hủy</a>
+        </form>
+    </div>
+</div>
+
+
+
+
+<script>
+    // JavaScript to handle the confirmation
+    document.getElementById("deleteButton").addEventListener("click", function () {
+        var confirmed = confirm("Are you sure you want to delete this material?");
+        if (confirmed) {
+            document.getElementById("deleteForm").submit();
+        }
+    });
+</script>
