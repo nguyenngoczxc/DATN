@@ -1,0 +1,53 @@
+﻿@model IEnumerable<TTTN3.Models.zipper>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "List_Zipper";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Danh sách kiểu khóa</h1>
+
+<p>
+    <a asp-action="Create_Zipper">Thêm khóa</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                STT
+            </th>
+            <th>
+                Mã
+            </th>
+            <th>
+                Kiểu khóa
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            var i = 1;
+        }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @i
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.zipper_Code)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.zipper_Name)
+                </td>
+                <td>
+                    <a asp-action="Edit_Zipper" asp-route-zipper_Code="@item.zipper_Code">Sửa</a> |
+                    <a asp-action="Delete_Zipper" asp-route-zipper_Code="@item.zipper_Code">Xóa</a>
+                </td>
+            </tr>
+            i++;
+        }
+    </tbody>
+</table>
