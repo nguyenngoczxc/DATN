@@ -1,0 +1,52 @@
+﻿@model IEnumerable<TTTN3.Models.size>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "List_Size";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Danh sách kích thước</h1>
+
+<p>
+    <a asp-action="Create_Size">Thêm kích thước</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Stt
+            </th>
+            <th>
+               Mã
+            </th>
+            <th>
+               Kích thước
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int stt = 1;
+        }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @stt
+                <td>
+                    @Html.DisplayFor(modelItem => item.size_Code)
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.size_Name)
+            </td>
+            <td>
+                    <a asp-action="Edit_Size" asp-route-size_Code="@item.size_Code">Sửa</a> |
+                    <a asp-action="Delete_Size" asp-route-size_Code="@item.size_Code">Xóa</a>
+            </td>
+        </tr>
+        stt++;
+}
+    </tbody>
+</table>
