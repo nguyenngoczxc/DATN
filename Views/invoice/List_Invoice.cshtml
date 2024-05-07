@@ -1,0 +1,140 @@
+﻿@using X.PagedList.Mvc.Core
+@model X.PagedList.IPagedList<TTTN3.Models.invoice>
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.AspNetCore.Mvc.ViewFeatures;
+@using TTTN3.Models.ViewModels
+@using System.Security.Claims
+@using TTTN3.Responsitory
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@{
+    var userId = HttpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+    ViewData["Title"] = "List_Invoice";
+    Layout = "~/Views/Shared/_LayoutOgani.cshtml";
+}
+<style>
+    .checkout {
+        width: 100%;
+    }
+
+    .checkout__order .checkout__order__products span {
+        float: none;
+    }
+</style>
+
+<section class="breadcrumb-section set-bg" data-setbg="@Url.Content("~/Images/vali.jpg")"
+         style="background-image: url('@Url.Content("~/Images/vali.jpg")'); width:100%;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text">
+                    <h2 style="color:green">ĐƠN HÀNG</h2>
+                    <div class="breadcrumb__option">
+                        <a asp-controller="Home" asp-action="Index" style="color:green">Trang chủ</a>
+                        <span style="color:green">Đơn hàng</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="checkout spad">
+    <div class="container">
+        <div class="checkout__form">
+            <h4 class="checkout__title">Lịch sử mua hàng</h4>
+
+            @if (Model.Count > 0)
+            {
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        @using (Html.BeginForm("List_Invoice", "Invoice", FormMethod.Get))
+                        {
+                            <div class="input-group">
+                                @Html.TextBox("SearchText", null, new { @class = "form-control", placeholder = "Mã đơn hàng hoặc ngày mua" })
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-info">Tìm</button>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <!-- Bảng danh sách hóa đơn -->
+                <table class="table table-striped">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>STT</th>
+                            <th>Mã</th>
+                            <th>Khách hàng</th>
+                            <th>Tổng tiền</th>
+                            <th>Kiểu thanh toán</th>
+                            <th>Trạng thái</th>
+                            <th>Tổng số lượng</th>
+                            <th>Ngày mua</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            var index = 1;
+                        }
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@((Model.PageNumber - 1) * Model.PageSize + index++)</td>
+                                <td>@Html.DisplayFor(modelItem => item.invoice_Code)</td>
+                                <td>@Html.DisplayFor(modelItem => item.CustomerName)</td>
+                                <td>@Html.DisplayFor(modelItem => item.total_Payment)</td>
+                                <td>@(item.type_Payment == 1 ? "Chưa thanh toán" : "Đã thanh toán")</td>
+                                <td style="color: @(item.status == 1 ? "yellow" : (item.status == 2 ? "blue" : (item.status == 3 ? "green" : "red")))">
+                                    @switch (item.status)
+                                    {
+                                        case 1:
+                                            <text>Đang xác nhận</text>
+                                            ;
+                                            break;
+                                        case 2:
+                                            <text>Đang vận chuyển</text>
+                                            ;
+                                            break;
+                                        case 3:
+                                            <text>Hoàn thành</text>
+                                            ;
+                                            break;
+                                        case 4:
+                                            <text>Đã hủy</text>
+                                            ;
+                                            break;
+                                    }
+                                </td>
+                                <td>@Html.DisplayFor(modelItem => item.total_Quantity)</td>
+                                <td>@Html.DisplayFor(modelItem => item.invoice_Date)</td>
+                                <td>
+                                    <a class="btn btn-link btn-sm" asp-action="Details_Invoice" asp-route-invoice_Code="@item.invoice_Code">Chi tiết</a>
+                                    @if (item.status == 1)
+                                    {
+                                        <a class="btn btn-link btn-sm" asp-action="Delete_Invoice" asp-route-invoice_Code="@item.invoice_Code">Hủy</a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+                <!-- Phân trang -->
+                <nav>
+                    @Html.PagedListPager(Model, page => Url.Action("List_Invoice", new { page, Id = userId, SearchText = ViewData["SearchText"] }), new X.PagedList.Web.Common.PagedListRenderOptions()
+           {
+               LiElementClasses = new List<String> { "page-item" },
+               PageClasses = new List<String> { "page-link" }
+           })
+                </nav>
+            }
+            else
+            {
+                <h5 style="color: red;">Bạn chưa đặt đơn hàng nào. Click <a href="/Shop/Index">vào đây</a> để mua sắm.</h5>
+            }
+        </div>
+    </div>
+</section>

@@ -1,0 +1,12 @@
+﻿@model TTTN3.Models.comment
+
+<div class="card p-3">
+    <form method="post" asp-action="Create_Comment" asp-controller="Comment">
+        <div class="form-group">
+            <label asp-for="content" class="font-weight-bold">Nội dung:</label>
+            <input type="text" class="form-control" asp-for="content" />
+        </div>
+        <!-- Điền các trường cần thiết khác của comment tại đây -->
+        <button type="submit" class="btn btn-primary">Gửi</button>
+    </form>
+</div> 

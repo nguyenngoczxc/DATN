@@ -1,0 +1,322 @@
+﻿@using TTTN3.Models.ViewModels
+@model CartItemViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutOgani.cshtml";
+}
+
+<style>
+    .shoping-cart {
+        width: 100%;
+    }
+
+    .shoping__cart__table table tbody tr td.shoping__cart__item h5 {
+        display: block;
+    }
+</style>
+
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-section set-bg" data-setbg="@Url.Content("~/Images/vali.jpg")"
+         style="background-image: url('@Url.Content("~/Images/vali.jpg")'); width:100%;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text">
+                    <h2 style="color:green">Giỏ hàng</h2>
+                    <div class="breadcrumb__option">
+                        <a asp-controller="Home" asp-action="Index" style="color:green">Trang chủ</a>
+                        <span style="color:green">Giỏ hàng</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+<!-- Shoping Cart Section Begin -->
+<section class="shoping-cart spad">
+    <div class="container">
+        @if (Model.CartItems.Count > 0)
+        {
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="shoping__cart__table">
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="shoping__product">Sản phẩm</th>
+                                    <th>Kích thước</th>
+                                    <th>Màu sắc</th>
+                                    <th>Giá</th>
+                                    <th>Số lượng</th>
+                                    <th>Tổng</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach (var item in Model.CartItems)
+                                {
+                                    <tr>
+                                        <td class="shoping__cart__item">
+                                            <img src="@Url.Content("~/Images/Product/" + item.Product_Avatar)" alt=""
+                                                 style="width:100px;height:100px">
+                                            <h5 data-product-id="@item.Product_Code">@item.Product_Name</h5>
+                                        </td>
+                                        <td class="shoping__cart__size">
+                                            <select class="size-selector" data-product-index="@Model.CartItems.IndexOf(item)" data-product-id="@item.Product_Code" data-size-code="@item.Sizes.First().Size_Code">
+                                                @foreach (var size in Model.AllSizes)
+                                                {
+                                                    if (size.Size_Name == @item.Sizes.First().Size_Name)
+                                                    {
+                                                        <option selected="selected" value="@size.Size_Code">@size.Size_Name</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@size.Size_Code">@size.Size_Name</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </td>
+                                        <td class="shoping__cart__color">
+                                            <select class="color-selector" data-product-index="@Model.CartItems.IndexOf(item)" data-product-id="@item.Product_Code" data-color-code="@item.Colors.First().Color_Code">
+                                                @* <option value="">@item.Colors.First().Color_Name</option>
+                                        @foreach (var color in Model.AllColors)
+                                        {
+                                        <option value="@color.Color_Code">@color.Color_Name</option>
+                                        } *@
+                                                @foreach (var color in Model.AllColors)
+                                                {
+                                                    if (color.Color_Name == @item.Colors.First().Color_Name)
+                                                    {
+                                                        <option selected="selected" value="@color.Color_Code">@color.Color_Name</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@color.Color_Code">@color.Color_Name</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </td>
+                                        <td class="shoping__cart__price" data-product-id="@item.Product_Code">
+                                            @* @item.Sizes.First().Price *@
+                                            @string.Format("{0:#,0}", item.Sizes.First().Price)
+
+                                        </td>
+                                        <td class="shoping__cart__quantity" data-product-id="@item.Product_Code">
+                                            <div class="quantity">
+                                                <div class="pro-qty">
+                                                    <input type="text" value="@item.Sizes.First().Quantity">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="shoping__cart__total" data-product-id="@item.Product_Code">
+                                            @* @item.Sizes.First().Total *@
+                                            @string.Format("{0:#,0}", item.Sizes.First().Total)
+                                        </td>
+                                        <td class="shoping__cart__item__close delete-cart-btn">
+                                            <span class="icon_close"></span>
+                                        </td>
+                                        <td class="shoping__cart__item__close update-cart-btn">
+                                            <span class="icon_loading" style=" margin-left: 20px;  font-size: 18px;  "></span>
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="shoping__cart__btns">
+                        <a asp-action="Index" asp-controller="Shop" class="primary-btn cart-btn">TIẾP TỤC MUA SẮM</a>
+                        @*  <a href="#" class="primary-btn cart-btn cart-btn-right update-cart-btn">
+                    <span class="icon_loading"></span>
+                    Update Cart
+                    </a> *@
+                    </div>
+                </div>
+                @if (Model.CartItems.Count > 0)
+                {
+                    <div class="col-lg-6">
+                        <div class="shoping__checkout">
+                            <h5>Tổng thanh toán</h5>
+                            <ul>
+                                <li>Tổng <span>@string.Format("{0:#,0}", Model.GrandTotal)</span></li>
+                            </ul>
+                            <a asp-action="CheckOut" asp-controller="CheckOut" class="primary-btn">THANH TOÁN</a>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <h5 style="color:red">Giỏ hàng trống.Click <a asp-action="Index" asp-controller="Shop">vào đây</a> để mua sắm.</h5>
+        }
+    </div>
+</section>
+<!-- Shoping Cart Section End -->
+<!-- Thêm vào cuối file Index.cshtml -->
+@* <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> *@
+@* @section scripts { *@
+<script>
+    $(document).ready(function () {
+
+        $('.update-cart-btn').click(function () {
+            // Iterate through each row
+            var row = $(this).closest('tr');
+            var product_Code = row.find('h5').data('product-id');
+            var size = row.find('.size-selector').data('size-code');
+            var color = row.find('.color-selector').data('color-code');
+            var selectedSizeCode = row.find('.size-selector').val();
+            var selectedColorCode = row.find('.color-selector').val();
+            var quantity = row.find('.pro-qty input').val();
+
+            // Send update request for each row with changes
+            $.ajax({
+                url: '/Cart/UpdateCart',
+                type: 'POST',
+                data: {
+                    color: color,
+                    size: size,
+                    product_Code: product_Code,
+                    selectedSizeCode: selectedSizeCode,
+                    quantity: quantity,
+                    selectedColorCode: selectedColorCode
+                },
+                success: function (response) {
+                    if (response.success) {
+                        window.location.href = '/Cart/Index';
+                    } else {
+                        window.location.href = '/Cart/Index';
+                    }
+                },
+                error: function (error) {
+                    console.log('Error updating cart:', error);
+                }
+            });
+        });
+
+
+        $('.delete-cart-btn').click(function () {
+            var row = $(this).closest('tr');
+            var product_Code = row.find('h5').data('product-id');
+            var size = row.find('.size-selector').data('size-code');
+            var color = row.find('.color-selector').data('color-code');
+            console.log("sizeed+ " + size);
+            console.log("color + " + color);
+            console.log("row + " + row);
+            $.ajax({
+                url: '/Cart/DeleteCart',
+                type: 'POST',
+                data: {
+                    color: color,
+                    size: size,
+                    product_Code: product_Code,
+                },
+                success: function (response) {
+                    window.location.href = '/Cart/Index';
+                },
+                error: function (error) {
+                    console.log('Error deleting cart:', error);
+                }
+            });
+        });
+
+    });
+</script>
+
+@* <script>
+    $(document).ready(function () {
+
+        $('#update-cart-btn').click(function () {
+
+            // Lặp qua từng hàng trong bảng giỏ hàng
+            $('table tbody tr').each(function () {
+                var product_Code = $(this).find('h5').data('product-id');
+                var size = $(this).find('.size-selector').data('size-code');
+                var color = $(this).find('.color-selector').data('color-code');
+                var selectedSizeCode = $(this).find('.size-selector').val();
+                var selectedColorCode = $(this).find('.color-selector').val();
+                var quantity = $(this).find('.pro-qty input').val();
+
+                    console.log("sizeed+ "+selectedSizeCode);
+                    console.log("color + "+color);
+                console.log("colored+ "+selectedColorCode);
+                // Gửi yêu cầu cập nhật giỏ hàng đến action "UpdateCart" trong controller
+                $.ajax({
+                    url: '/Cart/UpdateCart',
+                    type: 'POST',
+                    data: {
+                        color: color,
+                        size: size,
+                        product_Code: product_Code,
+                        selectedSizeCode: selectedSizeCode, // Sử dụng selectedSizeCode đã cập nhật
+                        quantity: quantity,
+                        selectedColorCode: selectedColorCode // Sử dụng color_Code đã cập nhật
+                    },
+                    // success: function (response) {
+                    //     window.location.href = '/Cart/Index';
+
+                    // },
+                        success: function (response) {
+                            // Kiểm tra xem cập nhật có thành công hay không
+                            if (response.success) {
+                                // Cập nhật thành công, có thể thực hiện các hành động phù hợp với ứng dụng của bạn
+                                alert(response.message);
+                                window.location.href = '/Cart/Index';
+                            } else {
+                                // Hiển thị cảnh báo nếu cập nhật không thành công
+                                alert(response.message);
+                                window.location.href = '/Cart/Index';
+                            }
+                        },
+                    error: function (error) {
+                        // Xử lý lỗi nếu có
+                        console.log('Error updating cart:', error);
+                    }
+                });
+            });
+        });
+        $('#delete-cart-btn').click(function () {
+
+            // Lặp qua từng hàng trong bảng giỏ hàng
+            $('table tbody tr').each(function () {
+                var product_Code = $(this).find('h5').data('product-id');
+                var size = $(this).find('.size-selector').data('size-code');
+                var color = $(this).find('.color-selector').data('color-code');
+
+                    console.log("sizeed+ " + size);
+                    console.log("color + " + color);
+
+                $.ajax({
+                    url: '/Cart/DeleteCart',
+                    type: 'POST',
+                    data: {
+                        color: color,
+                        size: size,
+                        product_Code: product_Code,
+                    },
+                    success: function (response) {
+                        window.location.href = '/Cart/Index';
+
+                    },
+
+                    error: function (error) {
+                        // Xử lý lỗi nếu có
+                        console.log('Error deleting cart:', error);
+                    }
+                });
+            });
+        });
+
+    });
+
+</script>
+} *@

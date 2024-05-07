@@ -1,0 +1,140 @@
+﻿@using X.PagedList.Mvc.Core
+@using X.PagedList
+@model IPagedList<FavoriteProduct>
+@{
+    ViewData["Title"] = "FavoriteProducts";
+    Layout = "~/Views/Shared/_LayoutOgani.cshtml";
+    string currentController = ViewContext.RouteData.Values["controller"] as string;
+
+}
+@section Count {
+    @ViewData["favoriteProductCount"]
+}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<style>
+    .sidebar__item a.active {
+        color: #dd2222;
+    }
+
+    div.sidebar__item > ul > li {
+        background: #f5f5f5;
+        width: 100px;
+        padding-left: 10px;
+        margin: 5px;
+    }
+
+    #filterButton {
+        color: #dd2222;
+        background: #f5f5f5;
+        width: 100px;
+        text-align: center;
+        font-size: 25px;
+        border: 1px solid black;
+    }
+
+    .product {
+        width: 100%;
+    }
+</style>
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-section set-bg"
+         data-setbg="@Url.Content("~/Images/vali.jpg")"
+         style=" background-image: url('@Url.Content("~/Images/vali.jpg")'); width:100%;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text">
+                    <h2 style="color:green">Minh Ngoc Shop</h2>
+                    <div class="breadcrumb__option">
+                        <a asp-controller="Home" asp-action="Index" style="color:green">Trang chủ</a>
+                        <span style=" color:green">Sản phẩm</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+<!-- Product Section Begin -->
+<section class="product spad">
+    <div class="container">
+        <div class="row">
+            @if (Model.Count > 0)
+            {
+                <div @* class="col-lg-9 col-md-7" *@ id="productListContainer">
+                    <div class="row" id="productList">
+                        @foreach (var item in Model)
+                        {
+                            var product = item.product;
+                            <div class="col-lg-3 col-md-4 col-sm-6">
+                                <div class="featured__item">
+
+                                    <div class="featured__item__pic set-bg" data-setbg="@Url.Content("../Images/Product/" + product.product_Avatar)" style="background-image: url('@Url.Content("../Images/Product/" + product.product_Avatar)'); width:250px ;height:150px">
+                                        <ul class="featured__item__pic__hover">
+                                            <li><a class="add-to-favorites" data-product-code="@product.product_Code"><i class="fa fa-heart"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                            <li><a asp-action="Product_Details" asp-controller="Shop" asp-route-product_Code="@product.product_Code"><i class="fa fa-shopping-cart"></i></a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="featured__item__text">
+                                        <h6>
+                                            <a asp-controller="Shop" asp-action="Product_Details" asp-route-product_Code="@product.product_Code">
+                                                @Html.Raw(product.product_Name.Length > 20 ? product.product_Name.Substring(0, 20) + "..." : product.product_Name)
+                                            </a>
+                                        </h6>
+                                      @*   @if (ViewBag.MinPrices.ContainsKey(product.product_Code))
+                                        {
+                                            decimal minPrice = ViewBag.MinPrices[product.product_Code];
+                                            <h5>@string.Format("{0:#,0}", minPrice) VND</h5>
+                                        } *@
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+
+                    <div class="col-lg-12">
+                        @Html.PagedListPager(Model, page => Url.Action("FavoriteProducts", new { page = page/* , SearchText = ViewData["SearchText"]  */}),
+                                 new X.PagedList.Web.Common.PagedListRenderOptions()
+                    {
+                        LiElementClasses = new List<String> { "page-item" },
+                        PageClasses = new List<String> { "page-link" }
+                    })
+                    </div>
+                </div>
+            }
+            else
+            {
+                <p>Không tìm thấy sản phẩm yêu thích.</p>
+            }
+        </div>
+    </div>
+</section>
+<!-- Product Section End -->
+@section scripts {
+<script>
+    $(document).ready(function () {
+        $(".add-to-favorites").on("click", function () {
+            var productCode = $(this).data("product-code");
+
+            // Gửi yêu cầu AJAX đến hành động xóa sản phẩm khỏi danh sách yêu thích
+            $.ajax({
+                url: "@Url.Action("RemoveFromFavorites", "Shop")",
+                type: "POST",
+                data: { productCode: productCode },
+                success: function (data) {
+                    // Xử lý thành công, có thể làm gì đó nếu cần
+                    // Ví dụ: cập nhật giao diện người dùng
+                    // Để làm điều này, có thể cần thêm ID hoặc class vào phần tử HTML của sản phẩm để xác định sản phẩm cụ thể cần cập nhật.
+                    window.location.href = "@Url.Action("FavoriteProducts", "Shop")";
+                },
+                error: function () {
+                    // Xử lý lỗi nếu cần
+                }
+            });
+        });
+    });
+</script>
+}

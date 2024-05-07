@@ -1,0 +1,27 @@
+﻿@model CartItemViewModel
+<style>
+    .Bold{
+        font-weight:bold;
+    }
+</style>
+<div style="border:0px solid #808080">
+    <table class="table">
+        @foreach (var item in Model.CartItems)
+        {
+            <tr>
+                @if (item.Product_Name.Length >= 20)
+                {
+                    <td>@item.Product_Name.Substring(0, 20)...</td>
+                }
+                else{<td>@item.Product_Name</td>}
+                <td>@item.Sizes.First().Quantity</td>
+                <td style="padding-left:20px">@string.Format("{0:#,0}", item.Sizes.First().Total) </td>
+            </tr>
+        }
+        <tr class="Bold">
+            <td>Tổng</td>
+            <td></td>
+            <td style="color:red">@string.Format("{0:#,0}", Model.GrandTotal) </td>
+        </tr>
+    </table>
+</div>

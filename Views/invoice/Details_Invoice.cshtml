@@ -1,0 +1,143 @@
+﻿@model IEnumerable<TTTN3.Models.invoice_Detail>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Details_Invoice";
+    Layout = "~/Views/Shared/_LayoutOgani.cshtml";
+}
+
+<style>
+    .checkout {
+        width: 100%;
+    }
+
+    .checkout__order .checkout__order__products span {
+        float: none;
+    }
+</style>
+<section class="breadcrumb-section set-bg" data-setbg="@Url.Content("~/Images/vali.jpg")"
+         style="background-image: url('@Url.Content("~/Images/vali.jpg")'); width:100%;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text">
+                    <h2 style="color:green">HÓA ĐƠN</h2>
+                    <div class="breadcrumb__option">
+                        <a asp-controller="Home" asp-action="Index" style="color:green">Trang chủ</a>
+                        <span style="color:green">Hóa đơn</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="checkout spad">
+    <div class="container">
+        <div class="checkout__form">
+            <h3 class="checkout__title">Thông tin người nhận</h3>
+
+            <!-- Phần thông tin người nhận -->
+            <div class="checkout__info">
+                <h5>Người nhận hàng: @ViewBag.Username</h5>
+                <h5>Số điện thoại: @ViewBag.Phone</h5>
+                <h5>Địa chỉ: @ViewBag.Address</h5>
+                <h5>Email: @ViewBag.Email</h5>
+            </div>
+
+            <!-- Bảng chi tiết hóa đơn -->
+            <table class="table checkout__table">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Mã hóa đơn</th>
+                        <th>Sản phẩm</th>
+                        <th>Màu sắc</th>
+                        <th>Kích thước</th>
+                        <th>Số lượng</th>
+                        <th>Giá</th>
+                        <th>Tổng tiền</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @* @foreach (var (index, item) in Model.Select((invoice_Detail, index) => (index + 1, invoice_Detail))) *@
+                    @{
+                        var i = 1;
+                    }
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@i</td>
+                            <td>@Html.DisplayFor(modelItem => item.invoice.invoice_Code)</td>
+                            <td>@Html.DisplayFor(modelItem => item.product.product_Name)</td>
+                            <td>@Html.DisplayFor(modelItem => item.color.color_Name)</td>
+                            <td>@Html.DisplayFor(modelItem => item.size.size_Name)</td>
+                            <td>@Html.DisplayFor(modelItem => item.quantity_Sold)</td>
+                            <td>@Html.DisplayFor(modelItem => item.price)</td>
+                            <td>
+                                @{
+                                    var totalPrice = item.price * item.quantity_Sold;
+                                }
+                                @Html.DisplayFor(modelItem => totalPrice)
+                            </td>
+                        </tr>
+                        i++;
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- Thêm CSS để định dạng và làm đẹp -->
+<style>
+    /* Định dạng phần checkout */
+    .checkout {
+        padding: 20px;
+    }
+
+    /* Định dạng tiêu đề */
+    .checkout__title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    /* Định dạng phần thông tin người nhận */
+    .checkout__info {
+        margin-bottom: 20px;
+    }
+
+    /* Định dạng bảng */
+    .checkout__table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+        .checkout__table th, .checkout__table td {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+        }
+
+        /* Định dạng tiêu đề bảng */
+        .checkout__table th {
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        /* Định dạng tổng thể cho các hàng */
+        .checkout__table tr {
+            transition: background-color 0.2s;
+        }
+
+            /* Làm nổi bật hàng khi di chuột qua */
+            .checkout__table tr:hover {
+                background-color: #f1f1f1;
+            }
+
+        /* Định dạng ô */
+        .checkout__table td {
+            text-align: left;
+        }
+</style>

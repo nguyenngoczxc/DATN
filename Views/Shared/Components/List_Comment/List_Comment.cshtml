@@ -1,0 +1,380 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model IEnumerable<TTTN3.Models.comment>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<AppUserModel> SignInManager
+@inject UserManager<AppUserModel> UserManager
+@{
+    var productCode = ViewBag.ProductCode as string;
+
+}
+<style>
+    body {
+        background-color: #f7f6f6
+    }
+
+    .card {
+        border: none;
+        box-shadow: 5px 6px 6px 2px #e9ecef;
+        border-radius: 4px;
+    }
+
+    .dots {
+        height: 4px;
+        width: 4px;
+        margin-bottom: 2px;
+        background-color: #bbb;
+        border-radius: 50%;
+        display: inline-block;
+    }
+
+    .badge {
+        padding: 7px;
+        padding-right: 9px;
+        padding-left: 16px;
+        box-shadow: 5px 6px 6px 2px #e9ecef;
+    }
+
+    .user-img {
+        margin-top: 4px;
+    }
+
+    .check-icon {
+        font-size: 17px;
+        color: #c3bfbf;
+        top: 1px;
+        position: relative;
+        margin-left: 3px;
+    }
+
+    .form-check-input {
+        margin-top: 6px;
+        margin-left: -24px !important;
+        cursor: pointer;
+    }
+
+        .form-check-input:focus {
+            box-shadow: none;
+        }
+
+    .icons i {
+        margin-left: 8px;
+    }
+
+    .reply {
+        margin-left: 12px;
+    }
+
+        .reply small {
+            color: #b7b4b4;
+        }
+
+            .reply small:hover {
+                color: green;
+                cursor: pointer;
+            }
+
+    .p-3 {
+        margin-bottom: 5px;
+    }
+
+    .submit {
+        margin-left: 5px;
+        background: #7fad39;
+        color: white;
+        border-radius: 3px;
+        outline: none;
+        border: none;
+    }
+
+    .edit-comment-form {
+        display: none;
+        margin-left: 20px;
+        margin-top: 20px;
+        /* box-shadow: 0px 6px 16px 5px #e9ecef; */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .child {
+        margin-left: 20px;
+        margin-top: 20px;
+        /* box-shadow: 0px 6px 16px 5px #e9ecef; */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .reply1 {
+        border: none;
+        background: none;
+        color: #b7b4b4;
+        font-size: small;
+    }
+</style>
+<div class="container mt-5">
+
+    <div class="row  d-flex justify-content-center">
+
+        <div class="col-md-8">
+            @* <div class="headings d-flex justify-content-between align-items-center mb-3">
+            <h5>Unread comments(6)</h5>
+            </div> *@
+            @if (Model != null && Model.Any())
+            {
+                <h3>Bình luận</h3>
+                @foreach (var comment in Model.Where(c => c.parentComment_Id == null || c.parentComment_Id == ""))
+                {
+                    <div id="comment-@comment.comment_Code" class="card p-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="user d-flex flex-row align-items-center">
+                                <img src="@Url.Content("~/Images/User/" + comment.AspNetUser.avatar)" width="30" alt="Avatar" class="img-fluid user-img rounded-circle mr-2" />
+                                <span>
+                                    <small class="font-weight-bold text-primary">@comment.AspNetUser.UserName</small>
+                                    <small class="font-weight-bold" id="comment-content-@comment.comment_Code">@comment.content</small>
+                                </span>
+
+                            </div>
+                            <small>@comment.comment_Date.ToString()</small>
+                        </div>
+                        <div class="action d-flex justify-content-between mt-2 align-items-center">
+                            @if (User.Identity.IsAuthenticated && comment.AspNetUserId == UserManager.GetUserId(User))
+                            {
+                                <div class="reply px-4">
+                                    <button class="reply1" onclick="removeComment('@comment.comment_Code', '@productCode')">Xóa</button>
+                                    <span class="dots"></span>
+                                    <button class="reply1" onclick="showReplyForm('@comment.comment_Code')" data-parent-comment-id="@comment.comment_Code">Phản hồi</button>
+                                    <span class="dots"></span>
+                                    @* <button class="reply1" onclick="showEditForm('@comment.comment_Code')">Edit</button> *@
+                                    <button class="reply1" onclick="showEditForm('@comment.comment_Code', '@comment.parentComment_Id')">Sửa</button>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="reply px-4">
+                                    <button class="reply1" onclick="showReplyForm('@comment.comment_Code')">Phản hồi</button>
+                                </div>
+                            }
+
+                            <div class="icons align-items-center">
+
+                                <i class="fa fa-star text-warning"></i>
+                                <i class="fa fa-check-circle-o check-icon"></i>
+
+                            </div>
+
+                        </div>
+                        @* form chỉnh sửa comment *@
+                        <div id="edit-form-@comment.comment_Code" class="edit-comment-form card p-3">
+                            <div style="display: flex; align-items: center;">
+                                <img src="@Url.Content("~/Images/User/" + UserManager.GetUserAsync(User).Result.avatar)" width="30" alt="Avatar" class="img-fluid user-img rounded-circle mr-2" />
+                                <input id="edit-content-@comment.comment_Code" rows="4" cols="50" style="width:100%; border:none" value="@comment.content" />
+                                <button onclick="submitEditForm('@comment.comment_Code')" class="submit">Lưu</button>
+                            </div>
+                        </div>
+                        @* form phản hồi *@
+                        <div id="replyForm-@comment.comment_Code" class="edit-comment-form card p-3">
+                            <input type="hidden" id="productCode" value="@productCode" />
+                            <input type="hidden" id="parentCommentId" value="" /> <!-- Giá trị này sẽ được cập nhật bằng JavaScript khi nhấn nút "Reply" -->
+                            <div style="display: flex; align-items: center;">
+                                <img src="@Url.Content("~/Images/User/" + UserManager.GetUserAsync(User).Result.avatar)" width="30" alt="Avatar" class="img-fluid user-img rounded-circle mr-2" />
+                                <input id="replyText" style="width:100%; border:none" placeholder="Phản hồi" />
+                                <button onclick="submitReply()" class="submit">Gửi</button>
+                            </div>
+                        </div>
+                        @foreach (var childComment in Model.Where(c => c.parentComment_Id == comment.comment_Code))
+                        {
+                            <div class="card p-3 ml-3 child">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="user d-flex flex-row align-items-center">
+                                        <img src="@Url.Content("~/Images/User/" + childComment.AspNetUser.avatar)" width="30" alt="Avatar" class="img-fluid user-img rounded-circle mr-2" />
+                                        <span>
+                                            <small class="font-weight-bold text-primary">@childComment.AspNetUser.UserName</small>
+                                            <small class="font-weight-bold" id="comment-content-@childComment.comment_Code">@childComment.content</small>
+                                        </span>
+
+                                    </div>
+                                    <small>@childComment.comment_Date.ToString()</small>
+                                </div>
+                                <div class="action d-flex justify-content-between mt-2 align-items-center">
+                                    @if (User.Identity.IsAuthenticated && childComment.AspNetUserId == UserManager.GetUserId(User))
+                                    {
+                                        <div class="reply px-4">
+                                            <button class="reply1" onclick="removeComment('@childComment.comment_Code', '@productCode')">Xóa</button>
+                                            <span class="dots"></span>
+                                            @* <button class="reply1" onclick="showEditForm('@childComment.comment_Code')">Edit</button> *@
+                                            <button class="reply1" onclick="showEditForm('@childComment.comment_Code', '@childComment.parentComment_Id')">Sửa</button>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="reply px-4">
+                                            <button class="reply1" onclick="showReplyForm('@childComment.comment_Code')">Phản hồi</button>
+                                        </div>
+                                    }
+
+                                    <div class="icons align-items-center">
+
+                                        <i class="fa fa-star text-warning"></i>
+                                        <i class="fa fa-check-circle-o check-icon"></i>
+
+                                    </div>
+
+                                </div>
+                                @* form chỉnh sửa comment *@
+                                <div id="edit-form-@childComment.comment_Code" class="edit-comment-form card p-3">
+                                    <div style="display: flex; align-items: center;">
+                                        <img src="@Url.Content("~/Images/User/" + UserManager.GetUserAsync(User).Result.avatar)" width="30" alt="Avatar" class="img-fluid user-img rounded-circle mr-2" />
+                                        <input id="edit-content-@childComment.comment_Code" rows="4" cols="50" style="width:100%; border:none" value="@childComment.content" />
+                                        <button onclick="submitEditForm('@childComment.comment_Code')" class="submit">Sửa</button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+
+            }
+            else
+            {
+                <p>No comments available.</p>
+            }
+
+            <!-- Form tạo comment -->
+            <h3></h3>
+            <div id="commentForm" style="margin-top:50px" class="card p-3">
+                <input type="hidden" id="productCode" value="@productCode" />
+                <div style="display: flex; align-items: center;">
+                    <img src="@Url.Content("~/Images/User/" + UserManager.GetUserAsync(User).Result.avatar)" width="30" alt="Avatar" class="img-fluid user-img rounded-circle mr-2" />
+                 <input id="commentText" rows="4" cols="50" style="width:100%; border:none" placeholder="Bình luận" />
+                    <button onclick="submitComment()" class="submit">Gửi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function submitComment() {
+        var productCode = document.getElementById('productCode').value;
+        var commentText = document.getElementById('commentText').value;
+        if (!commentText) {
+            alert('Hãy nhập bình luận.'); // Hiển thị thông báo lỗi nếu không có commentText
+            return; // Dừng việc gửi dữ liệu nếu không có commentText
+        }
+        // Gửi dữ liệu lên action Create_Comment sử dụng AJAX
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Create_Comment", "Comment")',
+            data: { ProductCode: productCode, CommentText: commentText },
+            success: function (response) {
+                document.getElementById('commentText').value = '';
+                // Chuyển hướng về trang chi tiết sản phẩm với tham số product_Code
+                window.location.href = '/Shop/Product_Details?product_Code=' + productCode;
+            },
+            error: function (xhr, status, error) {
+                alert('Error: ' + error); // Hiển thị thông báo lỗi nếu có lỗi xảy ra
+            }
+        });
+    }
+   @*  function showEditForm(commentId) {
+        // Ẩn tất cả các form chỉnh sửa khác trước khi hiển thị form mới
+        $('.edit-comment-form').hide();
+
+        // Hiển thị form chỉnh sửa của comment được nhấp vào
+        $(`#edit-form-${commentId}`).show();
+    } *@
+        function showEditForm(commentId, parentCommentId) {
+            // Ẩn tất cả các form chỉnh sửa khác trước khi hiển thị form mới
+            $('.edit-comment-form').hide();
+
+            // Hiển thị form chỉnh sửa của comment được nhấp vào
+                $(`#edit-form-${commentId}`).show();
+        }
+
+    function submitEditForm(commentId) {
+        var content = $(`#edit-content-${commentId}`).val();
+
+        // Gửi dữ liệu cập nhật lên server sử dụng AJAX
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Edit_Comment", "Comment")',
+            data: { comment_Code: commentId, content: content },
+            success: function (response) {
+                // Sau khi cập nhật thành công, ẩn form chỉnh sửa
+                $(`#edit-form-${commentId}`).hide();
+                // Cập nhật nội dung của comment ngay trên trang
+                $(`#comment-content-${commentId}`).text(content);
+            },
+            error: function (xhr, status, error) {
+                alert('Error: ' + error);
+            }
+        });
+    }
+
+    function showReplyForm(commentId) {
+        // Sử dụng commentId như parentCommentId
+        var parentCommentId = commentId;
+
+        // Cập nhật giá trị cho hidden input có id là 'parentCommentId'
+        $('#parentCommentId').val(parentCommentId);
+
+        // Hiển thị form phản hồi cho bình luận tương ứng
+        $(`#replyForm-${commentId}`).show();
+    }
+
+    // Function để gửi phản hồi lên server
+    function submitReply() {
+        var productCode = $('#productCode').val();
+        var parentCommentId = $('#parentCommentId').val();
+        // Sử dụng parentCommentId để lấy replyText
+        var replyText = $(`#replyForm-${parentCommentId} #replyText`).val();
+
+        if (!replyText) {
+            alert('Hãy nhập bình luận.'); // Hiển thị thông báo lỗi nếu không có replyText
+            return; // Dừng việc gửi dữ liệu nếu không có replyText
+        }
+
+        // Gửi dữ liệu phản hồi lên server sử dụng AJAX
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Reply_Comment", "Comment")',
+            data: { productCode: productCode, parentCommentId: parentCommentId, replyText: replyText },
+            success: function (response) {
+                // Ẩn form phản hồi sau khi gửi thành công
+                $(`#replyForm-${parentCommentId}`).hide();
+                // Xóa nội dung của replyText
+                $(`#replyForm-${parentCommentId} #replyText`).val('');
+                // Chuyển hướng về trang chi tiết sản phẩm với tham số product_Code
+                window.location.href = '/Shop/Product_Details?product_Code=' + productCode;
+            },
+            error: function (xhr, status, error) {
+                alert('Error: ' + error); // Hiển thị thông báo lỗi nếu có lỗi xảy ra
+            }
+        });
+    }
+
+
+    function removeComment(commentCode, productCode) {
+        // Confirm before removing the comment
+        var confirmRemove = confirm("Bạn có chắc chắn muốn xóa?");
+
+        if (confirmRemove) {
+            // Send AJAX request to remove the comment
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Remove_Comment", "Comment")',
+                data: { comment_Code: commentCode },
+                success: function (response) {
+                    if (response.success) {
+                        // Remove the comment element from the DOM
+                        $(`#edit-form-${commentCode}`).hide();
+                        $(`#replyForm-${commentCode}`).hide();
+                        $(`#comment-${commentCode}`).remove();
+                        window.location.href = '/Shop/Product_Details?product_Code=' + productCode;
+                    } else {
+                        alert('Error: ' + response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert('Error: ' + error);
+                }
+            });
+        }
+    }
+</script>

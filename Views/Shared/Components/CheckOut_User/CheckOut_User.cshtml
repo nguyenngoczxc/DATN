@@ -1,0 +1,104 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+        @model TTTN3.Models.ViewModels.InvoiceViewModel
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<AppUserModel> SignInManager
+@inject UserManager<AppUserModel> UserManager
+
+<form id="checkoutForm" asp-action="CheckOut" asp-controller="CheckOut" method="post">
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    @if (ViewBag.User != null && User.Identity.IsAuthenticated)
+    {
+        var user = ViewBag.User as AppUserModel;
+        if (user != null)
+        {
+            <div class="form-group">
+                <label asp-for="CustomerName">Tên người nhận:</label>
+                <input asp-for="CustomerName" class="form-control" value="@user.UserName" />
+                <span asp-validation-for="CustomerName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email">Email:</label>
+                <input asp-for="Email" class="form-control" value="@user.Email" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Phone">Số điện thoại:</label>
+                <input asp-for="Phone" class="form-control" value="@user.phone" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Address">Địa chỉ:</label>
+                <input asp-for="Address" class="form-control" value="@user.address" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+        }
+    }
+
+    else
+    {
+        <div class="form-group">
+            <label asp-for="CustomerName">Tên người nhận:</label>
+            <input asp-for="CustomerName" class="form-control" />
+            <span asp-validation-for="CustomerName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Email">Email:</label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Phone">Số điện thoại:</label>
+            <input asp-for="Phone" class="form-control" />
+            <span asp-validation-for="Phone" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Address">Địa chỉ:</label>
+            <input asp-for="Address" class="form-control" />
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+    }
+   
+
+    <div class="form-group">
+        <label asp-for="Note" style="display:block">Ghi chú:</label>
+        <input asp-for="Note" class="form-control" />
+        <span asp-validation-for="Note" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="TypePayment" style="display:block">Loại thanh toán:</label>
+        <select asp-for="TypePayment" class="form-control">
+            <option value="1">COD</option>
+            <option value="2">Paypal</option>
+        </select>
+        <span asp-validation-for="TypePayment" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-block primary-btn site-btn" id="placeOrderBtn" style="margin-top:25px">Đặt hàng</button>
+        @* <a class = "btn btn-primary" href = "/CheckOut/PaymentWithPaypal"> Pay Now </a> *@
+    </div>
+</form>
+
+<script>
+    document.getElementById("checkoutForm").addEventListener("submit", function (event) {
+        // Ngăn chặn form gửi đi mặc định
+        event.preventDefault();
+
+        // Lấy ra các giá trị từ form
+        var formData = new FormData(this);
+        var formValues = {};
+        formData.forEach(function (value, key) {
+            formValues[key] = value;
+        });
+
+        // Log các giá trị
+        console.log("Form data:", formValues);
+
+        // Tiến hành gửi form đi
+        this.submit();
+    });
+</script>

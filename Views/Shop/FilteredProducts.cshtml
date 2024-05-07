@@ -1,0 +1,239 @@
+﻿@using X.PagedList.Mvc.Core
+@using X.PagedList
+@using X.PagedList.Web.Common
+@model IPagedList<product>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutOgani.cshtml";
+    string currentController = ViewContext.RouteData.Values["controller"] as string;
+
+}
+@section Count {
+    @ViewData["favoriteProductCount"]
+}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<style>
+    .sidebar__item a.active {
+        color: #dd2222;
+    }
+
+    div.sidebar__item > ul > li {
+        background: #f5f5f5;
+        width: 100px;
+        padding-left: 10px;
+        margin: 5px;
+    }
+
+    #filterButton {
+        color: #dd2222;
+        background: #f5f5f5;
+        width: 100px;
+        text-align: center;
+        font-size: 25px;
+        border: 1px solid black;
+    }
+
+    .product {
+        width: 100%;
+    }
+</style>
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-section set-bg"
+         data-setbg="@Url.Content("~/Images/vali.jpg")"
+         style=" background-image: url('@Url.Content("~/Images/vali.jpg")'); width:100%;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text">
+                    <h2 style="color:green">Minh Ngoc Shop</h2>
+                    <div class="breadcrumb__option">
+                        <a asp-controller="Home" asp-action="Index" style="color:green">Trang chủ</a>
+                        <span style=" color:green">Sản phẩm</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+<!-- Product Section Begin -->
+<section class="product spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-5">
+                <div class="sidebar">
+                    <div class="sidebar__item">
+                        <h4>Chất liệu</h4>
+                        <ul id="materialList">
+                            @foreach (var material in ViewBag.Materials)
+                            {
+                                <li><a href="#" data-material="@material.material_Code" data-selected="false">@material.material_Name</a></li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="sidebar__item">
+                        <h4>Giá</h4>
+                        <!-- Cập nhật phần giá sản phẩm -->
+                        <div class="price-range-wrap">
+                            <div id="price-range" class="ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
+                                 data-min="0" data-max="1000000">
+                                <div class="ui-slider-range ui-corner-all ui-widget-header"></div>
+                                <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
+                                <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
+                            </div>
+                            <div class="range-slider">
+                                <div class="price-input">
+                                    <input type="text" id="minamount">
+                                    <input type="text" id="maxamount">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sidebar__item">
+                        <h4>Nhà sản xuất</h4>
+                        <ul id="brandList">
+                            @foreach (var brand in ViewBag.Brands)
+                            {
+                                <li><a href="#" data-brand="@brand.brand_Code" data-selected="false">@brand.brand_Name</a></li>
+                            }
+                        </ul>
+                    </div>
+                    <button id="filterButton">Lọc</button>
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-7" id="productListContainer">
+                <div class="filter__item" id="sort">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-5">
+                            <div class="filter__sort" style="display:flex">
+                                <span style="width:100px;margin-top:-12px;">Sort By</span>
+                                <select id="sortOption">
+                                    <option value="name">Tên</option>
+                                    <option value="price">Giá</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="productList">
+                    @await Html.PartialAsync("_Product_List_Partial", Model)
+                </div>
+
+                <div id="paginationContainer">
+                    @Html.PagedListPager(
+                             Model,
+                             page => Url.Action("FilteredProducts", new
+                             {
+                                 page = page
+                             }),
+                             new PagedListRenderOptions { LiElementClasses = new List<string> { "page-item" }, PageClasses = new List<string> { "page-link" } }
+                             )
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Product Section End -->@*
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> *@
+
+@section scripts {
+    <script>
+
+        $(document).ready(function () {
+            $("#sortOption").change(function () {
+                console.log(" called");
+                filterProducts(); // Gọi hàm filterProducts khi có thay đổi
+            });
+            $(".sidebar__item").on("click", "a", function (e) {
+                e.preventDefault();
+
+                var $currentItem = $(this);
+                var isActive = $currentItem.hasClass("active");
+
+                // Remove active class from all items in the same category
+                $currentItem.closest('.sidebar__item').find('a').removeClass('active');
+
+                if (!isActive) {
+                    $currentItem.addClass("active");
+                    $currentItem.data("selected", true);
+                }
+
+                if ($("#filterButton").data("clicked")) {
+                    filterProducts();
+                }
+                console.log(" called");
+            });
+
+            var minPriceValue = 0;
+            var maxPriceValue = 1000000;
+
+            $("#price-range").slider({
+                range: true,
+                min: 0,
+                max: 1000000,
+                values: [0, 1000000],
+                slide: function (event, ui) {
+                    // Cập nhật giá trị min và max khi thanh trượt được di chuyển
+                    minPriceValue = ui.values[0];
+                    maxPriceValue = ui.values[1];
+
+                    // Hiển thị giá trị min và max trên trang
+                    $("#minamount").val(minPriceValue);
+                    $("#maxamount").val(maxPriceValue);
+                }
+            });
+
+            // Hiển thị giá trị min và max khi trang chính được tải
+            $("#minamount").val(minPriceValue);
+            $("#maxamount").val(maxPriceValue);
+
+            $(".sidebar__item").on("change", "select, input[type='text']", function () {
+                $("#filterButton").data("clicked", true);
+            });
+
+            $("#filterButton").on("click", function (e) {
+                e.preventDefault();
+                filterProducts();
+            });
+
+            function filterProducts() {
+                console.log("filterProducts function called");
+                var productListHTML = $("#productList").html();
+
+                // Lấy giá trị Brand, Material, Price
+                var brand = $("#brandList a.active").data("brand");
+                var material = $("#materialList a.active").data("material");
+                var minPrice = $("#minamount").val();
+                var maxPrice = $("#maxamount").val();
+                var sortOption = $("#sortOption").val();
+                var page = $('.pagination .active').text();
+
+
+                // Gọi API hoặc xử lý dữ liệu theo yêu cầu của bạn
+                $.ajax({
+                    type: "POST",
+                    url: "/Shop/Filter_Product",
+                    data: { brand_Code: brand, material_Code: material, minP: minPrice, maxP: maxPrice, sortOption: sortOption },
+                    success: function (result) {
+                        if (result.trim() === "") {
+                            // Empty result means no matching products
+                            alert("The product you were looking for was not found.");
+                        } else {
+                            $("#productList").html(result);
+                            $("#paginationContainer").hide();
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                        alert("An error occurred while processing the request.");
+                    }
+                });
+            }
+
+        });
+    </script>
+}
+
+

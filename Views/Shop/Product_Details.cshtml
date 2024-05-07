@@ -1,0 +1,282 @@
+﻿@model TTTN3.Models.product
+@{
+    ViewData["Title"] = "Product_Details";
+    Layout = "~/Views/Shared/_LayoutOgani.cshtml";
+    string currentController = ViewContext.RouteData.Values["controller"] as string;
+
+}
+<style>
+    .selected-option {
+        border-color: #333; /* Màu sắc đậm hơn cho phần đã chọn */
+    }
+</style>
+<section class="breadcrumb-section set-bg"
+         data-setbg="@Url.Content("~/Images/vali.jpg")"
+         style="background-image: url('@Url.Content("~/Images/vali.jpg")'); width:100%;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text">
+                    <h2 style="color:green">@ViewBag.Material</h2>
+                    <div class="breadcrumb__option">
+                        <a asp-controller="@currentController" asp-action="Index" style="color:green">@currentController</a>
+                        <a asp-controller="@currentController" asp-action="Product_By_Type" style="color:green"> @ViewBag.Material </a>
+                        <span style=" color:green">@ViewBag.Material</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Product Details Section Begin -->
+
+<section class="product-details spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <div class="product__details__pic">
+                    <div class="product__details__pic__item">
+                        <img class="product__details__pic__item--large"
+                             src="@Url.Content("../Images/Product/"+Model.product_Avatar)" alt="">
+                    </div>
+                    <div class="product__details__pic__slider owl-carousel">
+                        @foreach (var image in @ViewBag.productImage)
+                        {
+                            <img data-imgbigurl="@Url.Content("../Images/Product/" + image.image_Filename)"
+                                 src="@Url.Content("../Images/Product/"+image.image_Filename)" alt="">
+
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="product__details__text">
+                    <h3>@Model.product_Name</h3>
+                    <div class="product__details__rating">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star-half-o"></i>
+                        <span>(18 reviews)</span>
+                    </div>
+                    <div class="product__details__price">
+                        <div class="product__details__price">
+                            <span id="selectedPrice">@string.Format("{0:#,0}", ViewBag.MinPrice) VND</span>
+                        </div>
+                    </div>
+                    <p>
+                        @Model.description
+                    </p>
+                    <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+                        <span style="padding-top:21px">Kích thước:</span>
+                        @foreach (var size in ViewBag.productSize)
+                        {
+                            <a href="#" class="size-link" data-price="@size.Price" data-size-code="@size.size?.size_Code" style="color:black">
+                                <div style="width:100px; border: 1px solid #ccc; padding:0.5rem;margin:16px ; text-align: center">
+                                    @size.size?.size_Name
+                                </div>
+                            </a>
+                        }
+                        <br />
+                        <hr />
+                        <span style="padding-top: 21px;">Màu:</span>
+                        @foreach (var color in ViewBag.productColor)
+                        {
+                            <a href="#" class="color-link" data-color-code="@color.color?.color_Code" style="color:black">
+                                <div style="width:100px; border: 1px solid #ccc; padding:0.5rem;margin:16px ;text-align: center">
+                                    @color.color?.color_Name
+                                </div>
+                            </a>
+                        }
+                    </div>
+                    <div class="product__details__quantity" style="display: flex; align-items: center;">
+                        <div class="quantity">
+                            <div class="pro-qty">
+                                <input type="number" id="quantityInput" value="1" min="1">
+                            </div>
+                        </div>
+                        <div style="color: gray; font-size: 16px; margin-left: 10px;">@Model.quantity sản phẩm có sẵn</div>
+                        <div id="quantityErrorMessage" style="color: red; display: none; margin-left: 10px;">Số lượng nằm trong khoảng từ 0 đến @Model.quantity!</div>
+                    </div>
+
+                    <br />
+                    <a id="addToCartBtn" class="primary-btn addToCartBtn">
+                        THÊM VÀO GIỎ
+                    </a>
+                    <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
+                    <ul>
+                        <li><b>Có sẵn</b> 
+                            @if (Model.quantity != 0)
+                            {
+                                <span>Còn hàng</span>
+                            }
+                            else
+                            {
+                            <span>Hết hàng</span>
+                            }
+
+                            </li>
+                        <li><b>Vận chuyển</b> <span>Giao hàng 3 ngày. <samp>Nhận hàng miễn phí ngay.</samp></span></li>
+                        <li><b>Trọng lượng</b> <span>@Model.weight kg</span></li>
+                        <li><b>Bánh xe</b> <span>@ViewBag.Wheel </span></li>
+                        <li><b>Dây kéo</b> <span>@ViewBag.Zipper </span></li>
+                        <li>
+                            <b>Chia sẻ</b>
+                            <div class="share">
+                                <a href="#"><i class="fa fa-facebook"></i></a>
+                                <a href="#"><i class="fa fa-twitter"></i></a>
+                                <a href="#"><i class="fa fa-instagram"></i></a>
+                                <a href="#"><i class="fa fa-pinterest"></i></a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="product__details__tab">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab"
+                               aria-selected="true">Mô tả</a>
+                        </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab"
+                                   aria-selected="false">Bình luận </a>
+                            </li>
+                        }
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                            <div class="product__details__tab__desc">
+                                <h6>Thông tin sản phẩm</h6>
+                                <p>
+                                    @Model.description
+                                </p>
+                            </div>
+                        </div>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <div class="tab-pane" id="tabs-3" role="tabpanel">
+                                <div class="product__details__tab__desc">
+                                    @* @await Component.InvokeAsync("List_Comment") *@
+                                    @await Component.InvokeAsync("List_Comment", new { product_Code = Model.product_Code })
+                                </div>
+                            </div>
+                                }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Product Details Section End -->
+                            @section scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var sizeLinks = document.querySelectorAll('.size-link');
+            var colorLinks = document.querySelectorAll('.color-link');
+            var selectedPriceElement = document.getElementById('selectedPrice');
+            var quantityInput = document.getElementById('quantityInput');
+            var quantityErrorMessage = document.getElementById('quantityErrorMessage');
+            var addToCartBtn = document.getElementById('addToCartBtn');
+            var selectedSizeCode = ''; // Khởi tạo biến selectedSizeCode
+            var color_Code = ''; // Khởi tạo biến color_Code
+
+
+            sizeLinks.forEach(function (sizeLink) {
+                sizeLink.addEventListener('click', function () {
+                    event.preventDefault();
+                    var price = parseFloat(this.getAttribute('data-price'));
+                    selectedSizeCode = this.getAttribute('data-size-code'); // Cập nhật selectedSizeCode
+                    updateProductDetails(price, selectedSizeCode, null);
+                });
+            });
+
+            colorLinks.forEach(function (colorLink) {
+                colorLink.addEventListener('click', function () {
+                    event.preventDefault();
+                    color_Code = this.getAttribute('data-color-code'); // Cập nhật color_Code
+                    updateProductDetails(null, null, color_Code);
+                });
+            });
+
+            function updateProductDetails(price, sizeCode, colorCode) {
+                if (price !== null) {
+                    // Định dạng giá trị price thành chuỗi với dấu phẩy ngăn cách hàng nghìn và ký hiệu tiền tệ VND
+                    var formattedPrice = price.toLocaleString('vi-VN', { minimumFractionDigits: 0 }).replace(/\./g, ',') + ' VND';
+                    // Gán giá trị đã định dạng vào phần tử HTML
+                    selectedPriceElement.textContent = formattedPrice;
+                }
+
+
+                if (sizeCode !== null) {
+                    sizeLinks.forEach(function (sizeLink) {
+                        var currentSizeCode = sizeLink.getAttribute('data-size-code');
+                        var style = sizeCode === currentSizeCode ? 'color: red;' : 'color: black;';
+                        sizeLink.setAttribute('style', style);
+                    });
+                }
+
+                if (colorCode !== null) {
+                    colorLinks.forEach(function (colorLink) {
+                        var currentColorCode = colorLink.getAttribute('data-color-code');
+                        var style = colorCode === currentColorCode ? 'color: red;' : 'color: black;';
+                        colorLink.setAttribute('style', style);
+                    });
+                }
+            }
+
+            addToCartBtn.addEventListener('click', function (event) {
+                event.preventDefault();
+
+                // var quantity = parseInt(quantityInput.value, 10);
+
+                // if (quantity > @Model.quantity || quantity<1) {
+                    //     quantityErrorMessage.style.display = 'block';
+                    var quantity = parseInt(quantityInput.value, 10);
+                    var hasSelectedSize = selectedSizeCode !== '';
+                    var hasSelectedColor = color_Code !== '';
+
+                    if (!hasSelectedSize || !hasSelectedColor) {
+                        // Display an error message based on the missing selections or invalid quantity
+                        var errorMessage = 'Hãy ';
+                        errorMessage += !hasSelectedSize ? 'chọn một kích thước, ' : '';
+                        errorMessage += !hasSelectedColor ? 'chọn một màu ' : '';
+                        alert(errorMessage);
+                    } else if (quantity > @Model.quantity || quantity < 1) {
+                        quantityErrorMessage.style.display = 'block';
+                    } else {
+                        quantityErrorMessage.style.display = 'none';
+                        // Lấy thông tin sản phẩm để thêm vào giỏ hàng
+                        var product_Code = '@Model.product_Code';
+                        var price = parseFloat(document.getElementById('selectedPrice').innerText.replace(/[^\d.-]/g, ''));
+
+                        // Gửi yêu cầu ajax để thêm sản phẩm vào giỏ hàng
+                        $.ajax({
+                            url: '/Cart/Add',
+                            type: 'POST',
+                            data: {
+                                product_Code: product_Code,
+                                selectedSizeCode: selectedSizeCode, // Sử dụng selectedSizeCode đã cập nhật
+                                quantity: quantity,
+                                price: price,
+                                color_Code: color_Code // Sử dụng color_Code đã cập nhật
+                            },
+                            success: function (response) {
+                                alert("Thêm giỏ hàng thành công.");
+                                window.location.href = '/Cart/Index';
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                alert("Error.")
+                            }
+                        });
+                    }
+                });
+            });
+        </script>
+
+                            }
