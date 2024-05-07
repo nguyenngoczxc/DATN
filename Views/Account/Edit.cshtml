@@ -1,0 +1,134 @@
+﻿@model EditUserViewModel
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<AppUserModel> SignInManager
+@inject UserManager<AppUserModel> UserManager
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_LayoutOgani.cshtml";
+}
+
+<style>
+    .checkout {
+        width: 100%;
+    }
+
+    .checkout__order .checkout__order__products span {
+        float: none;
+    }
+
+    .box {
+        display: inline-block;
+        margin: 10px; /* Khoảng cách giữa các khối */
+    }
+    .img1{
+        width: 200px;
+        height: 200px;
+        border-radius:50%;
+        margin-bottom:30px;
+    }
+
+    .form-group {
+        display: flex;
+        align-items: center;
+    }
+
+        .form-group label {
+            flex: 1;
+            margin-right: 10px; /* Khoảng cách giữa label và input */
+            text-align: left; /* Căn giữa nội dung label theo chiều ngang */
+        }
+
+        .form-group input {
+            flex: 3; /* Phần input chiếm 2/3 của không gian */
+        }
+        .submit1{
+        background: #7fad39;
+        font-weight: bold;
+        color: white;
+        width: 100px !important; 
+        margin-left: 547px;
+        }
+</style>
+
+<section class="breadcrumb-section set-bg" data-setbg="@Url.Content("~/Images/vali.jpg")"
+         style="background-image: url('@Url.Content("~/Images/vali.jpg")'); width:100%;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text">
+                    <h2 style="color:green">Hồ sơ cá nhân</h2>
+                    <div class="breadcrumb__option">
+                        <a asp-controller="Home" asp-action="Index" style="color:green">Trang chủ</a>
+                        <span style="color:green">Hồ sơ cá nhân</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="checkout spad">
+    <div class="container">
+        <div class="checkout__form">
+            <h4>Hồ sơ cá nhân</h4>
+            <br />
+            <form asp-action="Edit" asp-controller="Account" enctype="multipart/form-data" class="pt-3">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="box" style=" width:30%;">
+                <!-- Display current avatar -->
+                @if (Model.avatar == null)
+                {
+                    <img src="@Url.Content("~/Images/User/avatar.jpg")" alt="Avatar" class="img-fluid img1" />
+                }
+                else
+                {
+                    <img src="@Url.Content("~/Images/User/"+Model.avatar)" alt="Avatar" class="img-fluid img1"  />
+                }
+
+                <!-- File input to allow user to choose a new avatar -->
+                <div class="form-group">
+                    @* <label asp-for="avatar" class="control-label">Choose New Avatar</label> *@
+                    <input type="file" asp-for="avatar" name="avatar" class="form-control" value="@Model.avatar" style="border:none"/>
+                    <span asp-validation-for="avatar" class="text-danger"></span>
+                </div>
+               </div>
+                <div class="box" style=" width:60%;">
+                    <div class="form-group">
+                    <label asp-for="user_Name" class="control-label">Tên</label>
+                    <input asp-for="user_Name" class="form-control" value="@Model.user_Name" />
+                    <span asp-validation-for="user_Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="phone" class="control-label">Số điện thoại</label>
+                    <input asp-for="phone" class="form-control" value="@Model.phone" />
+                    <span asp-validation-for="phone" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="email" class="control-label">Email</label>
+                    <input asp-for="email" class="form-control" value="@Model.email" />
+                    <span asp-validation-for="email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="password_Old" class="control-label">Mật khẩu cũ</label>
+                    <input asp-for="password_Old" class="form-control" />
+                    <span asp-validation-for="password_Old" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="password" class="control-label">Mật khẩu mới</label>
+                    <input asp-for="password" class="form-control" />
+                    <span asp-validation-for="password" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="address" class="control-label">Địa chỉ</label>
+                    <input asp-for="address" class="form-control" value="@Model.address" />
+                    <span asp-validation-for="address" class="text-danger"></span>
+                </div>
+                </div>
+                <div class="mt-3">
+                    <input type="submit" class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn submit1" value="Sửa" />
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
