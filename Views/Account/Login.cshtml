@@ -1,0 +1,112 @@
+﻿@model LoginViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Purple Admin</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="../../LayoutAdmin/assets/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="../../LayoutAdmin/assets/vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="../../LayoutAdmin/assets/css/style.css">
+    <!-- End layout styles -->
+    <link rel="shortcut icon" href="../../LayoutAdmin/assets/images/favicon.ico" />
+</head>
+<body>
+    <div class="container-scroller">
+        <div class="container-fluid page-body-wrapper full-page-wrapper">
+            <div class="content-wrapper d-flex align-items-center auth">
+                <div class="row flex-grow">
+                    <div class="col-lg-4 mx-auto">
+                        <div class="auth-form-light text-left p-5">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                            @if (TempData["ErrorMessage"] != null)
+                            {
+                                <div class="alert alert-danger" role="alert">
+                                    @TempData["ErrorMessage"]
+                                </div>
+                            }
+                            <div class="brand-logo">
+                                <img src="../../LayoutAdmin/assets/images/logo.svg">
+                            </div>
+                            <h4>Xin chào! Bắt đầu ngay bây giờ</h4>
+                            <h6 class="font-weight-light">Đăng nhập để tiếp tục.</h6>
+                            <form asp-action="Login" asp-controller="Account" enctype="multipart/form-data" class="pt-3">
+                                @* <div asp-validation-summary="ModelOnly" class="text-danger"></div> *@
+                                <div class="form-group">
+                                    <label asp-for="user_Name" class="control-label">Tên</label>
+                                    <input asp-for="user_Name" class="form-control" />
+                                    <span asp-validation-for="user_Name" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="password" class="control-label">Mật khẩu</label>
+                                    <input asp-for="password" class="form-control" />
+                                    <span asp-validation-for="password" class="text-danger"></span>
+                                </div>
+                                <div class="mt-3">
+                                    <button class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn">ĐĂNG NHẬP</button>
+                                </div>
+                                <div class="my-2 d-flex justify-content-between align-items-center">
+                                    <!-- Check if Model is not null before accessing ReturnUrl -->
+                                    <!-- Trong file cshtml của trang đăng nhập -->
+                                    <!-- Trong file cshtml của trang đăng nhập -->
+
+                                    <a asp-action="ForgotPassword" asp-controller="Account" class="auth-link text-black">Quên mật khẩu?</a>
+                                </div>
+
+                            </form>
+                            <!-- Form đăng nhập bằng Facebook -->
+                            <div class="mb-2" style="
+                                text-align: center;
+                                margin-top: 25px !important;
+                            ">
+                                <form method="post" asp-controller="Account" asp-action="ExternalLoginFacebook">
+                                    @* <div asp-validation-summary="ModelOnly" class="text-danger"></div> *@
+                                    @* <button type="submit">Đăng nhập bằng Facebook</button> *@
+
+                                    <button type="submit" class="btn btn-block btn-facebook auth-form-btn">
+                                        <i class="mdi mdi-facebook me-2"></i>Đăng nhập bằng Facebook
+                                    </button>
+                                </form>
+                            </div>
+                            <div class="text-center mt-4 font-weight-light">
+                                Bạn chưa có tài khoản? <a asp-action="Register" asp-controller="Account" class="text-primary">Tạo</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- content-wrapper ends -->
+        </div>
+        <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="../../LayoutAdmin/assets/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="../../LayoutAdmin/assets/js/off-canvas.js"></script>
+    <script src="../../LayoutAdmin/assets/js/hoverable-collapse.js"></script>
+    <script src="../../LayoutAdmin/assets/js/misc.js"></script>
+    <!-- endinject -->
+</body>
+</html>
+@section scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
