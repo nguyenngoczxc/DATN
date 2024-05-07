@@ -1,0 +1,219 @@
+﻿@using X.PagedList.Mvc.Core
+@using X.PagedList
+@using X.PagedList.Web.Common
+@model IPagedList<product>
+@{
+    ViewData["Title"] = "Index2";
+    Layout = "~/Views/Shared/_LayoutOgani.cshtml";
+    string currentController = ViewContext.RouteData.Values["controller"] as string;
+}
+@section Count {
+    @ViewData["favoriteProductCount"]
+}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<style>
+    .sidebar__item a.active {
+        color: #dd2222;
+    }
+
+    div.sidebar__item > ul > li {
+        background: #f5f5f5;
+        width: 100px;
+        padding-left: 10px;
+        margin: 5px;
+    }
+
+    #filterButton {
+        color: #dd2222;
+        background: #f5f5f5;
+        width: 100px;
+        text-align: center;
+        font-size: 25px;
+        border: 1px solid black;
+    }
+
+    .product {
+        width: 100%;
+    }
+</style>
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-section set-bg"
+         data-setbg="@Url.Content("~/Images/vali.jpg")"
+         style=" background-image: url('@Url.Content("~/Images/vali.jpg")'); width:100%;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text">
+                    <h2 style="color:green">Minh Ngoc Shop</h2>
+                    <div class="breadcrumb__option">
+                        <a asp-controller="Home" asp-action="Index" style="color:green">Trang chủ</a>
+                        <span style=" color:green">Sản phẩm</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+<!-- Product Section Begin -->
+@if (Model.Count == 0)
+{
+    <p>Không có sản phẩm phù hợp</p>
+}
+else
+{
+<section class="product spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-5">
+                <div class="sidebar">
+                    @using (Html.BeginForm("Index", "Shop", FormMethod.Get))
+                    {
+                        <input type="hidden" name="selectedMaterial" value="@ViewBag.SelectedMaterial" />
+                        <input type="hidden" name="selectedBrand" value="@ViewBag.SelectedBrand" />
+                        <input type="hidden" name="sortOption" value="@ViewBag.SortOption" />
+                        <div class="sidebar__item">
+                            <h4>Chất liệu</h4>
+                            <ul id="materialList">
+                                @foreach (var material in ViewBag.Materials)
+                                {
+                                    <li>
+                                        <label>
+                                            <input type="checkbox" name="selectedMaterials" value="@material.material_Code" @(material.material_Code == ViewBag.SelectedMaterial ? "checked" : "") />
+                                            @material.material_Name
+                                        </label>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+
+                        <div class="sidebar__item">
+                            <h4>Giá</h4>
+                            <div class="price-range-wrap">
+                                <div id="price-range" class="ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
+                                     data-min="0" data-max="1000000">
+                                    <div class="ui-slider-range ui-corner-all ui-widget-header"></div>
+                                    <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
+                                    <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
+                                </div>
+                                <div class="range-slider">
+                                    <div class="price-input">
+                                        <input type="text" name="minPrice" id="minamount">
+                                        <input type="text" name="maxPrice" id="maxamount">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sidebar__item">
+                            <h4>Nhà sản xuất</h4>
+                            <ul id="brandList">
+                                @foreach (var brand in ViewBag.Brands)
+                                {
+                                    <li>
+                                        <label>
+                                            <input type="checkbox" name="selectedBrands" value="@brand.brand_Code" @(brand.brand_Code == ViewBag.SelectedBrand ? "checked" : "") />
+                                            @brand.brand_Name
+                                        </label>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                        <button type="submit" id="filterButton">Lọc</button>
+                    }
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-7" id="productListContainer">
+                <div class="filter__item" id="sort">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-5">
+                            <div class="filter__sort" style="display:flex">
+                                <span style="width:100px;margin-top:-12px;">Sort By</span>
+                                <select id="sortOption">
+                                    <option value="name">Tên</option>
+                                    <option value="price">Giá</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="productList">
+                    @await Html.PartialAsync("_Product_List_Partial", Model)
+                </div>
+
+                <div id="paginationContainer">
+                    @Html.PagedListPager(Model, page => Url.Action("Index", new
+                        {
+                            selectedMaterials = ViewBag.selectedMaterials,
+                            selectedBrands = ViewBag.selectedBrands,
+                            minPrice = ViewBag.minPrice != 0 ? ViewBag.minPrice : (int?)null,
+                            maxPrice = ViewBag.maxPrice != 0 ? ViewBag.maxPrice : (int?)null,
+                            sortOption = ViewBag.sortOption,
+                            searchTerm = ViewBag.searchTerm,
+                            page = page
+                        }),
+                             new X.PagedList.Web.Common.PagedListRenderOptions()
+                    {
+                        LiElementClasses = new List<String> { "page-item" },
+                        PageClasses = new List<String> { "page-link" }
+                    })
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+}
+<!-- Product Section End -->
+@* <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> *@
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            var minPriceValue = 0;
+            var maxPriceValue = 1000000;
+
+            $("#price-range").slider({
+                range: true,
+                min: 0,
+                max: 1000000,
+                values: [0, 1000000],
+                slide: function (event, ui) {
+                    // Cập nhật giá trị min và max khi thanh trượt được di chuyển
+                    minPriceValue = ui.values[0];
+                    maxPriceValue = ui.values[1];
+
+                    // Hiển thị giá trị min và max trên trang
+                    $("#minamount").val(minPriceValue);
+                    $("#maxamount").val(maxPriceValue);
+                }
+            });
+
+            // Hiển thị giá trị min và max khi trang chính được tải
+            $("#minamount").val(minPriceValue);
+            $("#maxamount").val(maxPriceValue);
+
+            $("#sortOption, #materialList input, #brandList input").change(function () {
+                filterProducts();
+            });
+            function filterProducts(event) {
+                // Get values from your form elements
+                var selectedMaterial = $("#materialList input:checked").map(function () { return $(this).val(); }).get();
+                var selectedBrand = $("#brandList input:checked").map(function () { return $(this).val(); }).get();
+                var sortOption = $("#sortOption").val();
+                console.log(selectedMaterial);
+                console.log(selectedBrand);
+                console.log(sortOption);
+                // Set values in hidden fields
+                $("input[name='selectedMaterial']").val(selectedMaterial);
+                $("input[name='selectedBrand']").val(selectedBrand);
+                $("input[name='sortOption']").val(sortOption);
+
+                // Submit the form
+                event.preventDefault();
+                $("form").submit();
+            }
+        });
+    </script>
+} 
+ 
