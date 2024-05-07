@@ -10,6 +10,8 @@ using TTTN3.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Facebook;
 using System.Configuration;
+using PayPal.Api;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 //using TTTN3.Responsitory;
 
@@ -19,6 +21,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddTransient<IMailSender,EmailSender>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddMvc().AddSessionStateTempDataProvider();
+builder.Services.AddSession();
+builder.Services.AddRazorPages();
 //builder.Services.AddDbContext<DataContext>(options =>
 //{
 //    options.UseSqlServer(builder.Configuration.GetConnectionString("DbConnect"));
@@ -62,17 +67,6 @@ builder.Services.AddAuthorization(options =>
     });
 });
 
-//builder.Services.AddAuthentication(options =>
-//{
-//    options.DefaultScheme = IdentityConstants.ApplicationScheme;
-//    options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
-//})
-//    .AddFacebook(options =>
-//    {
-//        options.AppId = "365051326404429";
-//        options.AppSecret = "cd89f79eec1b0f2eeb05f3c7ef4735ff";
-//    });
-
 builder.Services.AddAuthentication().AddFacebook(options =>
 {
     options.AppId = "935397418243371";
@@ -92,6 +86,7 @@ builder.Services.AddHangfire(configuration => configuration
         UseRecommendedIsolationLevel = true,
         DisableGlobalLocks = true
     }));
+//builder.Services.AddTransient<PaypalConfiguration>();
 
 var app = builder.Build();
 app.UseSession();
@@ -101,10 +96,15 @@ app.UseStaticFiles();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
+    
 }
 
 app.UseStatusCodePagesWithReExecute("/Account/AccessDenied");
+app.UseHttpsRedirection();
+app.UseStaticFiles();
 app.UseRouting();
+app.UseSession();
 
 app.UseAuthentication();
 app.UseAuthorization();
