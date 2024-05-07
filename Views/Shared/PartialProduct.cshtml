@@ -1,0 +1,38 @@
+﻿@model TTTN3.Models.product
+<style>
+    .featured__item__pic {
+        width: 200px; /* set your desired width */
+        height: 150px; /* set your desired height */
+        background-size: cover; /* This property ensures that the background image covers the entire container */
+        background-position: center; /* This property centers the background image */
+    }
+</style>
+
+
+<div class="featured__item__pic set-bg" data-setbg="@Url.Content("../Images/Product/" + Model.product_Avatar)" style="background-image: url('@Url.Content("../Images/Product/" + Model.product_Avatar)'); width:200px">
+    <ul class="featured__item__pic__hover">
+        @* <li>
+            <form method="post" action="@Url.Action("AddToFavorites", "Shop")">
+                <input type="hidden" name="product_Code" value="@Model.product_Code" />
+                <button type="submit"><i class="fa fa-heart"></i></button>
+            </form>
+
+        </li> *@
+        <li> <a href="#" class="addToFavoritesBtn" data-product-code="@Model.product_Code"><i class="fa fa-heart"></i></a>  </li>
+        <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+        <li><a asp-action="Product_Details" asp-controller="Shop" asp-route-product_Code="@Model.product_Code"><i class="fa fa-shopping-cart"></i></a></li>
+    </ul>
+</div>
+<div class="featured__item__text">
+    <h6>
+        <a asp-controller="Shop" asp-action="Product_Details" asp-route-product_Code="@Model.product_Code">
+            @Html.Raw(Model.product_Name.Length > 20 ? Model.product_Name.Substring(0, 20) + "..." : Model.product_Name)
+        </a>
+    </h6>
+    @if (ViewBag.MinPrices.ContainsKey(Model.product_Code))
+    {
+        decimal minPrice = ViewBag.MinPrices[Model.product_Code];
+        <h5>@string.Format("{0:#,0}", minPrice) VND</h5>
+    }
+</div>
+

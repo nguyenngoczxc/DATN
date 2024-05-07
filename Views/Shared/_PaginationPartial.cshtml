@@ -1,0 +1,32 @@
+﻿@* @using X.PagedList.Mvc.Core
+@using X.PagedList
+@using X.PagedList.Web.Common
+@model IPagedList<product>
+
+@if (Model.PageCount > 1)
+{
+    <div class="text-center">
+        @Html.PagedListPager(
+                Model,
+                page => Url.Action("Index", new
+                {
+                    page = page
+                }),
+                new PagedListRenderOptions { LiElementClasses = new List<string> { "page-item" }, PageClasses = new List<string> { "page-link" } }
+                )
+    </div>
+}
+ *@
+@using X.PagedList.Mvc.Core
+@using X.PagedList
+@using X.PagedList.Web.Common
+@model IPagedList<product>
+
+@Html.PagedListPager(
+        Model,
+        page => Url.Action("Index", new
+        {
+            page = page
+        }),
+        new PagedListRenderOptions { LiElementClasses = new List<string> { "page-item" }, PageClasses = new List<string> { "page-link" } }
+    )

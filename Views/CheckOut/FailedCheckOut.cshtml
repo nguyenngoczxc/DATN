@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutOgani.cshtml";
+}
+<style>
+    .checkout {
+        width: 100%;
+    }
+
+    .checkout__order .checkout__order__products span {
+        float: none;
+    }
+</style>
+<section class="breadcrumb-section set-bg" data-setbg="@Url.Content("~/Images/vali.jpg")"
+         style="background-image: url('@Url.Content("~/Images/vali.jpg")'); width:100%;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text">
+                    <h2 style="color:green">THANH TOÁN</h2>
+                    <div class="breadcrumb__option">
+                        <a asp-controller="Home" asp-action="Index" style="color:green">Trang chủ</a>
+                        <span style="color:green">Thanh toán</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Breadcrumb Section End -->
+<!-- Checkout Section Begin -->
+<section class="checkout spad">
+    <div class="container">
+        <div class="checkout__form">
+            <h2>Payment Failed</h2>
+            <p>Rất tiếc, đã xảy ra lỗi trong quá trình mua hàng.</p>
+
+            <p>Vui lòng thử lại sau.</p>
+        </div>
+    </div>
+</section>
+<!-- Checkout Section End -->

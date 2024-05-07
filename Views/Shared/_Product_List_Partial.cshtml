@@ -1,0 +1,66 @@
+﻿@using X.PagedList.Mvc.Core
+@using X.PagedList
+@model IPagedList<product>
+<style>
+    .featured__item__pic {
+        width: 200px; /* set your desired width */
+        height: 150px; /* set your desired height */
+        background-size: cover; /* This property ensures that the background image covers the entire container */
+        background-position: center; /* This property centers the background image */
+    }
+</style>
+@foreach (var item in Model)
+{
+    <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="featured__item">
+
+            <div class="featured__item__pic set-bg" data-setbg="@Url.Content("../Images/Product/" + item.product_Avatar)" style="background-image: url('@Url.Content("../Images/Product/" + item.product_Avatar)'); width:200px">
+                <ul class="featured__item__pic__hover">
+                    <li> <a href="#" class="addToFavoritesBtn" data-product-code="@item.product_Code"><i class="fa fa-heart"></i></a>  </li>
+                    <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                    <li><a asp-action="Product_Details" asp-controller="Shop" asp-route-product_Code="@item.product_Code"><i class="fa fa-shopping-cart"></i></a></li>
+                </ul>
+            </div>
+            <div class="featured__item__text">
+                <h6>
+                    <a asp-controller="Shop" asp-action="Product_Details" asp-route-product_Code="@item.product_Code">
+                        @Html.Raw(item.product_Name.Length > 20 ? item.product_Name.Substring(0, 20) + "..." : item.product_Name)
+                    </a>
+                </h6>
+                @if (ViewBag.MinPrices.ContainsKey(item.product_Code))
+                {
+                    decimal minPrice = ViewBag.MinPrices[item.product_Code];
+                    <h5>@string.Format("{0:#,0}", minPrice) VND</h5>
+                }
+            </div>
+
+        </div>
+    </div>
+}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Đoạn mã của bạn để xử lý sự kiện khi nút "Add to Favorites" được click
+            $(document).on('click', '.addToFavoritesBtn', function (event) {
+                event.preventDefault();
+                var productId = $(this).data("product-code");
+                console.log(productId);
+                $.ajax({
+                    type: "POST",
+                    url: "/Shop/AddToFavorites",
+                    data: { productId: productId },
+                    success: function (result) {
+                        if (result.success) {
+                            alert("Added to Favorites!");
+                        } else {
+                            alert("Failed to add to Favorites.");
+                        }
+                    },
+                    error: function () {
+                        alert("An error occurred.");
+                    }
+                });
+            });
+        });
+    </script>
