@@ -1,0 +1,30 @@
+﻿@model IEnumerable<material>
+<style>
+    a:hover{
+        cursor:pointer;
+    }
+</style>
+@using (Html.BeginForm("Index", "Shop", FormMethod.Get, new { id = "filterForm" }))
+{
+    <ul id="materialList">
+        @foreach (var item in Model)
+        {
+            <li class="material-item" data-material-code="@item.material_Code">
+                <a class="material-name">@item.material_Name</a>
+            </li>
+        }
+    </ul>
+    <input type="hidden" name="selectedMaterials" id="selectedMaterials" />
+}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".material-item").click(function () {
+            var materialCode = $(this).data("material-code");
+
+            // Đặt giá trị của selectedMaterials và submit form
+            $("#selectedMaterials").val(materialCode);
+            $("#filterForm").submit();
+        });
+    });
+</script>
