@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Access Denied";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Truy cập bị từ chối</div>
+                <div class="card-body">
+                    <p>Bạn không có quyền truy cập.</p>
+                    <p>Vui lòng liên hệ với quản trị viên của bạn để được hỗ trợ.</p>
+                </div>
+                <div class="card-footer text-center">
+                    <button type="button" class="btn btn-primary" onclick="redirectToLogin()">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        function redirectToLogin() {
+            window.location.href = '@Url.Action("Login", "Account")';
+        }
+    </script>
+}
