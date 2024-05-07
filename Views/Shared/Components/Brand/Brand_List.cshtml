@@ -1,0 +1,10 @@
+﻿@model IEnumerable<brand>
+@foreach (var size in Model)
+{
+    <div class="sidebar__item__size" >
+        <label for="@size.brand_Name" style="color:black">
+            @size.brand_Name
+            <input type="radio" id="@size.brand_Name">
+        </label>
+    </div>
+}
