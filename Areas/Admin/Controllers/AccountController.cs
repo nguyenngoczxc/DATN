@@ -37,7 +37,7 @@ namespace TTTN3.Areas.Admin.Controllers
             IQueryable<AppUserModel> lstSanPham = _userManager.Users.AsNoTracking().OrderByDescending(x => x.UserName);
             if (!string.IsNullOrEmpty(SearchText))
             {
-                lstSanPham = lstSanPham.Where(x => x.UserName.Equals(SearchText));
+                lstSanPham = lstSanPham.Where(x => x.UserName.Contains(SearchText));
             }
             ViewData["SearchText"] = SearchText;
 

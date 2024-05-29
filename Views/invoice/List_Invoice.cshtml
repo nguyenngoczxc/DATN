@@ -51,7 +51,7 @@
                         @using (Html.BeginForm("List_Invoice", "Invoice", FormMethod.Get))
                         {
                             <div class="input-group">
-                                @Html.TextBox("SearchText", null, new { @class = "form-control", placeholder = "Mã đơn hàng hoặc ngày mua" })
+                                @Html.TextBox("SearchText", null, new { @class = "form-control", placeholder = "Mã đơn hàng" })
                                 <div class="input-group-append">
                                     <button type="submit" class="btn btn-info">Tìm</button>
                                 </div>

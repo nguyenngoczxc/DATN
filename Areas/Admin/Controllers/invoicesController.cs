@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -29,6 +30,7 @@ namespace TTTN3.Areas.Admin.Controllers
         [Route("List_Invoice")]
         public async Task<IActionResult> List_Invoice(string SearchText, int? page)
         {
+            CultureInfo.CurrentCulture = new CultureInfo("vi-VN");
             const int pageSize = 10; // Number of items per page
 
             IQueryable<invoice> ds = _context.invoices
@@ -37,32 +39,32 @@ namespace TTTN3.Areas.Admin.Controllers
             var pageNumber = page ?? 1; // If no page is specified, default to page 1
             if (!string.IsNullOrEmpty(SearchText))
             {
-                if (SearchText.Equals("COD", StringComparison.OrdinalIgnoreCase))
+                if (SearchText.Equals("COD", StringComparison.CurrentCultureIgnoreCase))
                 {
                     // Filter for incomplete invoices (status == 1)
                     ds = ds.Where(x => x.type_Payment == 1);
                 }
-                else if (SearchText.Equals("Transfer", StringComparison.OrdinalIgnoreCase))
+                else if (SearchText.Equals("paypal", StringComparison.CurrentCultureIgnoreCase))
                 {
                     // Filter for incomplete invoices (status == 1)
                     ds = ds.Where(x => x.type_Payment == 2);
                 }
-                else if (SearchText.Equals("order", StringComparison.OrdinalIgnoreCase))
+                else if (SearchText.Equals("xác nhận", StringComparison.CurrentCultureIgnoreCase))
                 {
                     // Filter for incomplete invoices (status == 1)
                     ds = ds.Where(x => x.status == 1);
                 }
-                else if (SearchText.Equals("transport", StringComparison.OrdinalIgnoreCase))
+                else if (SearchText.Equals("vận chuyển", StringComparison.CurrentCultureIgnoreCase))
                 {
                     // Filter for incomplete invoices (status == 1)
                     ds = ds.Where(x => x.status == 2);
                 }
-                else if (SearchText.Equals("complete", StringComparison.OrdinalIgnoreCase))
+                else if (SearchText.Equals("hoàn thành", StringComparison.CurrentCultureIgnoreCase))
                 {
                     // Filter for incomplete invoices (status == 1)
                     ds = ds.Where(x => x.status == 3);
                 }
-                else if (SearchText.Equals("delete", StringComparison.OrdinalIgnoreCase))
+                else if (SearchText.Equals("hủy", StringComparison.CurrentCultureIgnoreCase))
                 {
                     // Filter for incomplete invoices (status == 1)
                     ds = ds.Where(x => x.status == 4);
@@ -108,6 +110,7 @@ namespace TTTN3.Areas.Admin.Controllers
             ViewBag.Phone = infor.Phone;
             ViewBag.Address = infor.Address;
             ViewBag.Email = infor.Email;
+            ViewBag.Status = infor.status;
             return View(invoice);
         }
 
@@ -167,6 +170,7 @@ namespace TTTN3.Areas.Admin.Controllers
             }
             // Đặt trạng thái của đơn hàng thành "complete"
             invoice.status = 3;
+            invoice.type_Payment = 2;
 
             // Lưu các thay đổi vào cơ sở dữ liệu
             await _context.SaveChangesAsync();

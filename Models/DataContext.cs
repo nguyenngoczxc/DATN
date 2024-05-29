@@ -31,5 +31,6 @@ namespace TTTN3.Models
         public DbSet<comment> comments { get; set; }
         public DbSet<FavoriteProduct> FavoriteProduct { get; set; }
         public DbSet<promotion> promotion { get; set; }
+        public DbSet<guarantee> guarantee { get; set; }
     }
 }

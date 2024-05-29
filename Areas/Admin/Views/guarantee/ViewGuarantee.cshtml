@@ -1,0 +1,48 @@
+﻿@model TTTN3.Models.guarantee
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Complete_guarantee";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<h1>Chi tiết bảo hành</h1>
+<div class="row">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="guarantee_Code">Mã bảo hành:</label>
+        <input asp-for="guarantee_Code" class="form-control" readonly />
+    </div>
+    <div class="form-group">
+        <label asp-for="customer">Khách hàng:</label>
+        <input asp-for="customer" class="form-control" readonly />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="product">Sản phẩm:</label>
+        <input asp-for="product" class="form-control" readonly />
+    </div>
+    <div class="form-group">
+        <label asp-for="guarantee_Date">Ngày bảo hành:</label>
+        <input asp-for="guarantee_Date" class="form-control" type="date" readonly />
+    </div>
+    <div class="form-group">
+        <label asp-for="guarantee_Description" class="control-label">Chi tiết lỗi:</label>
+        <textarea asp-for="guarantee_Description" class="form-control" readonly></textarea>
+    </div>
+    <div class="form-group">
+        <label asp-for="guarantee_Solution" class="control-label">Xử lý:</label>
+        <textarea asp-for="guarantee_Solution" class="form-control" readonly></textarea>
+    </div>
+</div>
+
+<div>
+    <a asp-action="List_guarantee" asp-controller="guarantee" asp-area="Admin">Danh sách</a>
+
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
