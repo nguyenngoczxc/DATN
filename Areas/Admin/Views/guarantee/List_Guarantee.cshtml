@@ -1,0 +1,120 @@
+﻿@using X.PagedList.Mvc.Core
+@model X.PagedList.IPagedList<TTTN3.Models.guarantee>
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "List Invoice";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    var _context = ViewData["DbContext"] ;
+}
+
+<h1>Danh sách hóa đơn</h1>
+<div class="row">
+    <div class="col-6">
+        @using (Html.BeginForm("List_guarantee", "guarantee", FormMethod.Get, new { }))
+        {
+            <div class="input-group input-group-sm">
+                @Html.TextBox("SearchText", null, new { @class = "form-control" })
+                @*<input type="text" name="searchtext" class="form-control" />*@
+                <span class="input-group-append">
+                    <button type="submit" class="btn btn-info btn-flat">Tìm</button>
+                </span>
+            </div>
+        }
+    </div>
+</div>
+<br />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                STT
+            </th>
+            <th>
+                Mã
+            </th>
+            <th>
+                Khách hàng
+            </th>
+            <th>
+                Sản phẩm
+            </th>
+            <th>
+                Ngày 
+            </th>
+            <th>
+                Trạng thái
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            var i = 0;
+        }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @((Model.PageNumber - 1) * Model.PageSize + i + 1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.guarantee_Code)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.customer)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.product)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.guarantee_Date)
+                </td>
+                <td style="color: @(item.status == 1 ? "yellow" : (item.status == 2 ? "blue" :  "green"))">
+                    @switch (item.status)
+                    {
+                        case 1:
+                            <text>Đang xác nhận</text>
+                            break;
+                        case 2:
+                            <text>Đang xử lý</text>
+                            break;
+                        case 3:
+                            <text>Hoàn thành</text>
+                            break;
+                        default:
+                            <text>Unknown</text>
+                            break;
+                    }
+                </td>
+                <td>
+                     <a asp-action="ViewGuarantee" asp-route-guarantee_Code="@item.guarantee_Code">Chi tiết</a>
+                    @if (item.status == 1)
+                    {
+                        <a asp-action="Solution_guarantee" asp-route-guarantee_Code="@item.guarantee_Code">|Xử lý</a>
+                    }
+                    @if (item.status == 2)
+                    {
+                        <a asp-action="Complete_guarantee" asp-route-guarantee_Code="@item.guarantee_Code">|Hoàn thành</a>
+                    }
+                    @* <form asp-action="DeleteGuarantee" method="post" style="display:inline;">
+                        <input type="hidden" name="guarantee_Code" value="@item.guarantee_Code" />
+                        <button type="submit" class="btn btn-link" onclick="return confirm('Bạn có chắc chắn muốn xóa?');"> | Xóa</button>
+                    </form> *@
+                </td>
+            </tr>
+            i++;
+        }
+    </tbody>
+</table>
+@*
+<div class="pagination">
+    @await Html.PartialAsync("_Pagination", Model)
+</div> *@
+@Html.PagedListPager(Model, page => Url.Action("List_Guarantee", new { page = page, SearchText = ViewData["SearchText"] }),
+                        new X.PagedList.Web.Common.PagedListRenderOptions()
+                    {
+                        LiElementClasses = new List<String> { "page-item" },
+                        PageClasses = new List<String> { "page-link" }
+                    })

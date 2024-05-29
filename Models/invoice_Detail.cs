@@ -25,6 +25,9 @@ namespace TTTN3.Models
         public virtual product? product { get; set; }
         public virtual size? size { get; set; }
         public virtual color? color { get; set; }
+        public virtual ICollection<guarantee>? guarantee { get; set; }
+
+
     }
 
 }

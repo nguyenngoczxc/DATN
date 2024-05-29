@@ -57,6 +57,10 @@
                         <th>Số lượng</th>
                         <th>Giá</th>
                         <th>Tổng tiền</th>
+                        @if (ViewBag.Status == 3)
+                        {
+                            <th> Bảo hành </th>
+                        }
                     </tr>
                 </thead>
                 <tbody>
@@ -80,6 +84,31 @@
                                 }
                                 @Html.DisplayFor(modelItem => totalPrice)
                             </td>
+                            @if (ViewBag.Status != 4)
+                            {
+                                <td>
+                                    @{
+                                        var latestGuarantee = item.guarantee?.OrderByDescending(g => g.guarantee_Date).FirstOrDefault();
+                                    }
+                                    @if (ViewBag.Status == 3 && latestGuarantee == null)
+                                    {
+                                        <a class="btn btn-link btn-sm" asp-controller="Guarantee" asp-action="Guarantee_Invoice" asp-route-invoice_Detail_Code="@item.invoice_Detail_Code">Bảo hành</a>
+                                    }
+                                    else if (latestGuarantee.status == 1)
+                                    {
+                                        <span style="color:rebeccapurple">Đã nhận</span>
+                                    }
+                                    else if (latestGuarantee.status == 2)
+                                    {
+                                        <span style="color:blue">Đang xử lý</span>
+                                    }
+                                    else if (latestGuarantee.status == 3)
+                                    {
+                                        <span style="color:forestgreen">Hoàn thành</span>
+                                        <a class="btn btn-link btn-sm" asp-controller="Guarantee" asp-action="Guarantee_Invoice" asp-route-invoice_Detail_Code="@item.invoice_Detail_Code">Bảo hành</a>
+                                    }
+                                </td>
+                                }
                         </tr>
                         i++;
                     }

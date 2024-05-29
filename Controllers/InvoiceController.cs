@@ -47,16 +47,18 @@ namespace TTTN3.Controllers
                 .Include(x => x.product)
                 .Include(x => x.size)
                 .Include(x => x.invoice)
+                .Include(d => d.guarantee)
                 .Where(m => m.invoice_Code == invoice_Code).ToListAsync();
             if (invoice == null)
             {
                 return NotFound();
             }
             var infor = await _context.invoices.FirstOrDefaultAsync(i => i.invoice_Code == invoice_Code);
-
+            
             ViewBag.UserName = infor.CustomerName;
             ViewBag.Phone = infor.Phone;
             ViewBag.Address = infor.Address;
+            ViewBag.Status = infor.status;
             ViewBag.Email = infor.Email;
             return View(invoice);
         }
